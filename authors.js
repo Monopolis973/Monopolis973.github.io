@@ -8,15 +8,19 @@ export function getAuthorInfo(name) {
     return authors[name]
 }
 
-export function generatePath(poemname) {
-    let ppath = ""
-    for (c of poemname) {
-        if (c == " ") {
-            ppath = ppath + "+"
-        }
-        else {
-            ppath = ppath + c
-        }
-    }
-    return "../" + ppath + "index.html"
+
+import { convertSpaces } from "./scripts/main"
+export function generatehref(poemname) {
+    // let ppath = ""
+    // for (c of poemname) {
+    //     if (c == " ") {
+    //         ppath = ppath + "+"
+    //     }
+    //     else {
+    //         ppath = ppath + c
+    //     }
+    // }
+    // return "../" + ppath + "index.html"
+
+    return "../" + convertSpaces(poemname) + "/index.html"
 }

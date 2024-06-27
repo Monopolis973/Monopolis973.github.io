@@ -57,7 +57,7 @@ document.getElementById("rightpane").appendChild(document.createElement("br"))
 
 // generate the heading
 const otherworksstr = document.createElement("p")
-otherworksstr.appendChild(document.createTextNode("Other works by " + authname))
+otherworksstr.appendChild(document.createTextNode("Other works by " + poemauth))
 document.getElementById("rightpane").appendChild(otherworksstr)
 
 // generate the list of other works (tho its currently just "works" -- ill implement other once i have another poem set up)
@@ -66,15 +66,22 @@ let poemlist = getAuthorInfo(poemauth)[1]
 let listitems = []
 let linkrefs = []
 
-import { generatePath } from "../../authors.js";
+import { generatehref } from "../../authors.js";
 
 for (let i = 0; i < poemlist.length; i++) {
     listitems[i] = document.createElement("li")
     linkrefs[i] = document.createElement("a")
-    linkrefs[i].href = generatePath(poemname)
+    linkrefs[i].href = generatehref(poemname)
     linkrefs[i].appendChild(document.createTextNode(poemlist[i]))
     listitems[i].appendChild(linkrefs[i])
     document.getElementById("rightpane").appendChild(listitems[i])
 }
 
 alert("otherworks built")
+
+
+alert("building charity")
+
+// import image
+import { convertSpaces } from "../../scripts/main.js";
+

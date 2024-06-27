@@ -22,8 +22,6 @@
 let charitybutton = document.querySelector("#charitybutton");
 charitybutton.addEventListener("click", () => window.location.href = "https://preserve.nature.org/page/80429/donate/1");
 
-alert("hi" + " " + "joe")
-
 // if (!localStorage.getItem("name")) {
 //     setUsername();
 //   } else {
@@ -34,3 +32,16 @@ alert("hi" + " " + "joe")
 // button.addEventListener("click", setUsername);
 
 // button.textContent = "does this work?";
+
+export function convertSpaces (strToConvert) {
+    let toReturn = ""
+    for (c of strToConvert) {
+        if (c == " ") {
+            toReturn = toReturn + "+"
+        }
+        else {
+            toReturn = toReturn + c
+        }
+    }
+    return toReturn
+}
