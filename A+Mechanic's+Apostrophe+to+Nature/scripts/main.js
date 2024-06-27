@@ -66,9 +66,11 @@ let poemlist = getAuthorInfo(poemauth)[1]
 let listitems = []
 let linkrefs = []
 
+alert(poemlist)
+
 import { generatehref } from "../../authors.js";
 
-for (let i = 0; i < poemlist.length; i++) {
+for (let i = 0; i <= poemlist.length; i++) {
     listitems[i] = document.createElement("li")
     linkrefs[i] = document.createElement("a")
     linkrefs[i].href = generatehref(poemname)
@@ -80,19 +82,31 @@ for (let i = 0; i < poemlist.length; i++) {
 alert("otherworks built")
 
 
-alert("building charity")
+// alert("building charity")
 
-// import image
-import { convertSpaces } from "../../authors.js";
+// // import image
+// import { convertSpaces } from "../../authors.js";
 
-let charitiybutton = document.createElement("button")
-charitiybutton.class = "invisible"
-charitiybutton.id = "charitybutton"
+// let charitiybutton = document.createElement("button")
+// charitiybutton.class = "invisible"
+// charitiybutton.id = "charitybutton"
 
-import { link } from ("../../charities/" + convertSpaces(poemcharity) + "/about.js");
-charitybutton.addEventListener("click", () => window.location.href = link());
+// import { link } from ("../../charities/" + convertSpaces(poemcharity) + "/about.js");
+// charitybutton.addEventListener("click", () => window.location.href = link());
 
-let charityimage = document.createElement("img")
-charityimage.src = "../charities/" + convertSpaces(poemcharity) + "/logo.svg"
-charityimage.width = "100%"
+// let charityimage = document.createElement("img")
+// charityimage.src = "../charities/" + convertSpaces(poemcharity) + "/logo.svg"
+// charityimage.width = "100%"
+
+// charitiybutton.appendChild(charityimage)
+// document.getElementById("leftpane").appendChild(charitiybutton)
+
+// document.getElementById("leftpane").appendChild(document.createElement("br"))
+// document.getElementById("leftpane").appendChild(document.createElement("br"))
+
+// // write the abt me
+
+// let charitytitle = document.createElement("h2")
+// charitytitle.appendChild(document.createTextNode(poemcharity))
+
 
