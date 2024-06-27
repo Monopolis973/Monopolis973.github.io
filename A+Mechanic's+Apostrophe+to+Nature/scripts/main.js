@@ -48,7 +48,7 @@ biohtml.appendChild(document.createTextNode(" " + biostr))
 
 document.getElementById("rightpane").appendChild(biohtml)
 
-alert("bio built")
+// alert("bio built")
 
 
 document.getElementById("rightpane").appendChild(document.createElement("br"))
@@ -66,52 +66,52 @@ let poemlist = getAuthorInfo(poemauth)[1]
 let listitems = []
 let linkrefs = []
 
-alert(poemlist)
+// alert(poemlist)
 
 import { generatehref } from "../../authors.js";
 
-alert("import worked")
+// alert("import worked")
 
 for (let i = 0; i < poemlist.length; i++) {
-    alert("for loop is working 1")
+    // alert("for loop is working 1")
     listitems[i] = document.createElement("li")
     linkrefs[i] = document.createElement("a")
     linkrefs[i].href = generatehref(poemname)
     linkrefs[i].appendChild(document.createTextNode(poemlist[i]))
     listitems[i].appendChild(linkrefs[i])
     document.getElementById("rightpane").appendChild(listitems[i])
-    alert("for loop is working 2")
+    // alert("for loop is working 2")
 }
 
 alert("otherworks built")
 
 
-// alert("building charity")
+alert("building charity")
 
-// // import image
-// import { convertSpaces } from "../../authors.js";
+// import image
+import { convertSpaces } from "../../authors.js";
 
-// let charitybutton = document.createElement("button")
-// charitybutton.class = "invisible"
-// charitybutton.id = "charitybutton"
+let charitybutton = document.createElement("button")
+charitybutton.class = "invisible"
+charitybutton.id = "charitybutton"
 
-// import { link } from ("../../charities/" + convertSpaces(poemcharity) + "/about.js");
-// charitybutton.addEventListener("click", () => window.location.href = link());
+import { link } from ("../../charities/" + convertSpaces(poemcharity) + "/about.js");
+charitybutton.addEventListener("click", () => window.location.href = link());
 
-// let charityimage = document.createElement("img")
-// charityimage.src = "../charities/" + convertSpaces(poemcharity) + "/logo.svg"
-// charityimage.width = "100%"
+let charityimage = document.createElement("img")
+charityimage.src = "../charities/" + convertSpaces(poemcharity) + "/logo.svg"
+charityimage.width = "100%"
 
-// let charitytitle = document.createElement("h2")
-// charitytitle.appendChild(document.createTextNode(poemcharity))
+let charitytitle = document.createElement("h2")
+charitytitle.appendChild(document.createTextNode(poemcharity))
 
-// charitybutton.appendChild(charityimage)
-// charitybutton.appendChild(charitytitle)
-// document.getElementById("leftpane").appendChild(charitybutton)
+charitybutton.appendChild(charityimage)
+charitybutton.appendChild(charitytitle)
+document.getElementById("leftpane").appendChild(charitybutton)
 
-// document.getElementById("leftpane").appendChild(document.createElement("br"))
-// document.getElementById("leftpane").appendChild(document.createElement("br"))
+document.getElementById("leftpane").appendChild(document.createElement("br"))
+document.getElementById("leftpane").appendChild(document.createElement("br"))
 
-// // write the abt me
+// write the abt me
 
 
