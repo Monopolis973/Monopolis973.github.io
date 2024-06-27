@@ -8,27 +8,27 @@ s.textContent = "Hello, this is a test!";
 //     alert("Ouch! Stop poking me!");
 //   });
 
-let button = document.querySelector("#change_user");
-let poem = ""
+// let button = document.querySelector("#change_user");
+// let poem = ""
 
-function setUsername () {
-    const name = prompt("please enter ur name:");
-    if (name) {
-        localStorage.setItem("name", name);
-        s.textContent = `Welcome to Candlelit Poetry, ${name}!`;
-    }
-};
+// function setUsername () {
+//     const name = prompt("please enter ur name:");
+//     if (name) {
+//         localStorage.setItem("name", name);
+//         s.textContent = `Welcome to Candlelit Poetry, ${name}!`;
+//     }
+// };
 
 let charitybutton = document.querySelector("#charitybutton");
 charitybutton.addEventListener("click", () => window.location.href = "https://preserve.nature.org/page/80429/donate/1");
 
-if (!localStorage.getItem("name")) {
-    setUsername();
-  } else {
-    const storedName = localStorage.getItem("name");
-    s.textContent = `Welcome to Candlelit Poetry, ${storedName}!`;
-};
+// if (!localStorage.getItem("name")) {
+//     setUsername();
+//   } else {
+//     const storedName = localStorage.getItem("name");
+//     s.textContent = `Welcome to Candlelit Poetry, ${storedName}!`;
+// };
 
-button.addEventListener("click", setUsername);
+// button.addEventListener("click", setUsername);
 
 // button.textContent = "does this work?";

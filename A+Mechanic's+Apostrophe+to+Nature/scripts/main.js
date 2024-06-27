@@ -10,8 +10,8 @@
 // let charitybutton = document.querySelector("#charitybutton");
 // charitybutton.addEventListener("click", () => window.location.href = "https://preserve.nature.org/page/80429/donate/1");
 
-let homebutton = document.querySelector("#homebutton");
-homebutton.addEventListener("click", () => window.location.href = "../index.html");
+// let homebutton = document.querySelector("#homebutton");
+// homebutton.addEventListener("click", () => window.location.href = "../index.html");
 
 
 const poemtitle = document.createElement('h2');
