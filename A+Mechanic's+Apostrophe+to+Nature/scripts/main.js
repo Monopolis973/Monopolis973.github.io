@@ -95,7 +95,8 @@ let charitybutton = document.createElement("button")
 charitybutton.class = "invisible"
 charitybutton.id = "charitybutton"
 
-import { link } from ("../../charities/" + convertSpaces(poemcharity) + "/about.js");
+let charityfileloc = "../../charities/" + convertSpaces(poemcharity) + "/about.js"
+import { link } from charityfileloc;
 charitybutton.addEventListener("click", () => window.location.href = link());
 
 let charityimage = document.createElement("img")
@@ -116,7 +117,7 @@ document.getElementById("leftpane").appendChild(document.createElement("br"))
 
 let aboutchar = document.createElement("p")
 
-import { about } from ("../../charities/" + convertSpaces(poemcharity) + "/about.js");
+import { about } from charityfileloc;
 aboutchar.appendChild(document.createTextNode(about()))
 
 document.getElementById("leftpane").appendChild(aboutchar)
