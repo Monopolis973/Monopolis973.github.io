@@ -71,6 +71,7 @@ alert(poemlist)
 import { generatehref } from "../../authors.js";
 
 for (let i = 0; i <= poemlist.length; i++) {
+    alert(i)
     listitems[i] = document.createElement("li")
     linkrefs[i] = document.createElement("a")
     linkrefs[i].href = generatehref(poemname)
