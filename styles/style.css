@@ -10,7 +10,7 @@ aside {
   padding: 30px 30px 50px 20px;
 }
 
-.middlepane {
+#middlepane {
   width: 60%;
   /* height: 100vh; */
   background-color: royalblue;
@@ -22,7 +22,7 @@ aside {
   /* height: 100vh; */
 }
 
-.titlepane {
+#titlepane {
   width: 100%;
   height: 100px;
   background-color: #4da6ff;
@@ -36,19 +36,19 @@ aside {
   display: flex;
 } */
 
-.leftpane {
+#leftpane {
   width: 20%;
   /* height: 100vh; */
   background-color: yellow;
 }
 
-.rightpane {
+#rightpane {
   width: 20%;
   /* height: 100vh; */
   background-color: rosybrown;
 }
 
-.bottompane {
+#bottompane {
   width: 100%;
   height: 30px;
   background-color: orange;

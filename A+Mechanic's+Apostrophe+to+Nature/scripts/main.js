@@ -93,8 +93,8 @@ for (let i = 0; i < poemlist.length; i++) {
 
 let charitybutton = document.createElement("button");
 // charitybutton.class = "invisible";  // do this manually
-charitybutton.border = "0"
-charitybutton.backgroundColor = "rgba(0, 0, 0, 0)"
+charitybutton.style.border = "0";
+charitybutton.style.background = "rgba(0, 0, 0, 0)";
 charitybutton.id = "charitybutton";
 
 import { getLink } from "../../charities/charityinfo.js";
@@ -102,7 +102,7 @@ charitybutton.addEventListener("click", () => window.location.href = getLink(poe
 
 let charityimage = document.createElement("img");
 charityimage.src = "../charities/" + poemcharity + ".svg";
-charityimage.width = "100%";
+charityimage.style.width = "100%";
 
 let charitytitle = document.createElement("h2");
 charitytitle.appendChild(document.createTextNode(poemcharity));
