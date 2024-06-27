@@ -40,11 +40,11 @@ const authname = document.createElement("strong")
 authname.appendChild(document.createTextNode(poemauth))
 biohtml.appendChild(authname)
 
-alert("author: " + poemauth)
+// alert("author: " + poemauth)
 // get and add the rest of the bio
 import { getAuthorInfo } from "../../authors.js";
-const biostr = getAuthorInfo(poemauth)[0]
-biohtml.appendChild(document.createTextNode(biostr))
+let biostr = getAuthorInfo(poemauth)[0]
+biohtml.appendChild(document.createTextNode(" " + biostr))
 
 document.getElementById("rightpane").appendChild(biohtml)
 
