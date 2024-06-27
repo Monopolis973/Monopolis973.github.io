@@ -1,0 +1,1 @@
+document.write("<h1 class=\"title\">[insert title here]</h2><br><br><p class=\"poem\">[insert poem here]<br></p>");
