@@ -34,8 +34,8 @@ var poems = {
     and pray that I could end our strife.
     But then my phone would ring, and I’d
     kill you, and wish you hadn’t died.`,
-    "Spencer+Hill",
-    "The+Nature+Conservancy"]
+    "Spencer Hill",
+    "The Nature Conservancy"]
 }
 
 export function getPoem(name) {
