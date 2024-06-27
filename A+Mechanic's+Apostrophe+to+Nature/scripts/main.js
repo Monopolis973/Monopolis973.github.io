@@ -8,63 +8,63 @@ poemtitle.appendChild(title);
 
 
 import { getPoem } from "../../poems.js";
-let poeminfo = getPoem(poemname)
-let poemstr = poeminfo[0]
-let poemauth = poeminfo[1]
-let poemcharity = poeminfo[2]
+let poeminfo = getPoem(poemname);
+let poemstr = poeminfo[0];
+let poemauth = poeminfo[1];
+let poemcharity = poeminfo[2];
 
 // read the poem lin by line into html
-const poemhtml = document.createElement("p")
-poemhtml.class = "poem"
+const poemhtml = document.createElement("p");
+poemhtml.class = "poem";
 for (const c of poemstr) {
     if (c != "\n") {
-        poemhtml.appendChild(document.createTextNode(c))
+        poemhtml.appendChild(document.createTextNode(c));
     }
     else {
         poemhtml.appendChild(document.createElement("br"))
-    }
-}
+    };
+};
 
 document.getElementById("middlepane").appendChild(poemtitle);
-document.getElementById("middlepane").appendChild(poemhtml)
+document.getElementById("middlepane").appendChild(poemhtml);
 
-alert("poem built")
+alert("poem built");
 
 
 // generate the poet bio
-const biohtml = document.createElement("p")
-biohtml.class = "bio"
+const biohtml = document.createElement("p");
+biohtml.class = "bio";
 
 // create the bolded name
-const authname = document.createElement("strong")
-authname.appendChild(document.createTextNode(poemauth))
-biohtml.appendChild(authname)
+const authname = document.createElement("strong");
+authname.appendChild(document.createTextNode(poemauth));
+biohtml.appendChild(authname);
 
 // alert("author: " + poemauth)
 // get and add the rest of the bio
 import { getAuthorInfo } from "../../authors.js";
-let biostr = getAuthorInfo(poemauth)[0]
-biohtml.appendChild(document.createTextNode(" " + biostr))
+let biostr = getAuthorInfo(poemauth)[0];
+biohtml.appendChild(document.createTextNode(" " + biostr));
 
-document.getElementById("rightpane").appendChild(biohtml)
+document.getElementById("rightpane").appendChild(biohtml);
 
 // alert("bio built")
 
 
-document.getElementById("rightpane").appendChild(document.createElement("br"))
+document.getElementById("rightpane").appendChild(document.createElement("br"));
 
 // generate the "other works" section
 
 // generate the heading
-const otherworksstr = document.createElement("p")
-otherworksstr.appendChild(document.createTextNode("Other works by " + poemauth))
-document.getElementById("rightpane").appendChild(otherworksstr)
+const otherworksstr = document.createElement("p");
+otherworksstr.appendChild(document.createTextNode("Other works by " + poemauth));
+document.getElementById("rightpane").appendChild(otherworksstr);
 
 // generate the list of other works (tho its currently just "works" -- ill implement other once i have another poem set up)
-const otherworkslist = document.createElement("ul")
-let poemlist = getAuthorInfo(poemauth)[1]
-let listitems = []
-let linkrefs = []
+const otherworkslist = document.createElement("ul");
+let poemlist = getAuthorInfo(poemauth)[1];
+let listitems = [];
+let linkrefs = [];
 
 // alert(poemlist)
 
@@ -74,19 +74,19 @@ import { generatehref } from "../../authors.js";
 
 for (let i = 0; i < poemlist.length; i++) {
     // alert("for loop is working 1")
-    listitems[i] = document.createElement("li")
-    linkrefs[i] = document.createElement("a")
-    linkrefs[i].href = generatehref(poemname)
-    linkrefs[i].appendChild(document.createTextNode(poemlist[i]))
-    listitems[i].appendChild(linkrefs[i])
-    document.getElementById("rightpane").appendChild(listitems[i])
+    listitems[i] = document.createElement("li");
+    linkrefs[i] = document.createElement("a");
+    linkrefs[i].href = generatehref(poemname);
+    linkrefs[i].appendChild(document.createTextNode(poemlist[i]));
+    listitems[i].appendChild(linkrefs[i]);
+    document.getElementById("rightpane").appendChild(listitems[i]);
     // alert("for loop is working 2")
 }
 
-alert("otherworks built")
+alert("otherworks built");
 
 
-alert("building charity")
+alert("building charity");
 
 // import image
 import { convertSpaces } from "../../authors.js";
@@ -95,13 +95,11 @@ let charitybutton = document.createElement("button");
 charitybutton.class = "invisible";
 charitybutton.id = "charitybutton";
 
-let charityfileloc = "../../charities/" + convertSpaces(poemcharity) + "/about.js";
-// import { link } from charityfileloc;
-eval(`import { link } from ` + charityfileloc + ";");
-charitybutton.addEventListener("click", () => window.location.href = link());
+import { getLink } from "../../charities/charityinfo.js";
+charitybutton.addEventListener("click", () => window.location.href = getLink(poemcharity));
 
 let charityimage = document.createElement("img");
-charityimage.src = "../charities/" + convertSpaces(poemcharity) + "/logo.svg";
+charityimage.src = "../charities/" + poemcharity + ".svg";
 charityimage.width = "100%";
 
 let charitytitle = document.createElement("h2");
@@ -118,9 +116,8 @@ document.getElementById("leftpane").appendChild(document.createElement("br"));
 
 let aboutchar = document.createElement("p");
 
-// import { about } from charityfileloc;
-eval(`import { about } from ` + charityfileloc + ";");
-aboutchar.appendChild(document.createTextNode(about()));
+import { getDescription } from "../../charities/charityinfo.js";
+aboutchar.appendChild(document.createTextNode(getDescription(poemcharity)));
 
 document.getElementById("leftpane").appendChild(aboutchar);
 
