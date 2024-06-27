@@ -22,6 +22,8 @@
 let charitybutton = document.querySelector("#charitybutton");
 charitybutton.addEventListener("click", () => window.location.href = "https://preserve.nature.org/page/80429/donate/1");
 
+alert("hi" + " " + "joe")
+
 // if (!localStorage.getItem("name")) {
 //     setUsername();
 //   } else {
