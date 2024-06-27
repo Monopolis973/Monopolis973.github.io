@@ -29,49 +29,10 @@ let s = "hello!\nI am joe.";
 let poemstr = "hello joe!\nI am john.";
 alert(poemstr)
 
-// alert(poemstr)
-// fetch("A Mechanic's Apostrophe to Nature.txt")
-//     .then(function (res) {
-//         return res.text();
-//     })
-//     .then(function (data) {
-//         console.log(data);
-//     });
-// alert(data)
-// poemstr = data;
-
-// Requiring fs module in which 
-// readFile function is defined.
-// const fs = require('fs');  // This is the failing line
-
-// alert("step 1")
-
-// fs.readFile("A+Mechanic's+Apostrophe+to+Nature.txt", (err, data) => {
-//   alert("step 2")
-//     if (err) throw err;
-//     alert("step 3")
-
-//     poemstr = data.toString();
-// });
-
-// let fr = new FileReader();
-// fr.onload = function () {
-//     document.getElementById('copyright')
-//         .textContent = fr.result;
-// }
-
-// fr.readAsText(this.files[0]);
-
-// fetch("A Mechanic's Apostrophe to Nature.txt")
-//   .then(response => response.text())
-//   .then((data) => {
-//     console.log(data)
-//   })
-
 import { getPoem } from "./poems.js";
 poemstr = getPoem("A+Mechanic's+Apostrophe+to+Nature")[0]
 
-alert(peomstr)
+alert(poemstr)
 
 const poemhtml = document.createElement("p")
 poemhtml.class = "poem"
