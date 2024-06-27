@@ -112,7 +112,7 @@ document.getElementById("leftpane").appendChild(charitybutton);
 document.getElementById("leftpane").appendChild(document.createElement("br"));
 document.getElementById("leftpane").appendChild(document.createElement("br"));
 
-// write the abt me
+// write the abt charity
 
 let aboutchar = document.createElement("p");
 
@@ -120,6 +120,8 @@ import { getDescription } from "../../charities/charityinfo.js";
 aboutchar.appendChild(document.createTextNode(getDescription(poemcharity)));
 
 document.getElementById("leftpane").appendChild(aboutchar);
+
+alert("charity built")
 
 
 
