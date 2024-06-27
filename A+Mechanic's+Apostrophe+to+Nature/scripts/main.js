@@ -114,4 +114,13 @@ document.getElementById("leftpane").appendChild(document.createElement("br"))
 
 // write the abt me
 
+let aboutchar = document.createElement("p")
+
+import { about } from ("../../charities/" + convertSpaces(poemcharity) + "/about.js");
+aboutchar.appendChild(document.createTextNode(about()))
+
+document.getElementById("leftpane").appendChild(aboutchar)
+
+
+
 
