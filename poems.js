@@ -1,5 +1,6 @@
 var poems = {
-    "A+Mechanic's+Apostrophe+to+Nature" : [`If I could fix a broken heart
+    "A Mechanic's Apostrophe to Nature" :
+    [`If I could fix a broken heart
     with just a hammer and a wrench
     and my box of unused parts,
     then I would wait upon this bench
@@ -32,8 +33,9 @@ var poems = {
     I’d hand to you a sheaf of thyme
     and pray that I could end our strife.
     But then my phone would ring, and I’d
-    kill you, and wish you hadn’t died.`, "Spencer+Hill", "The+Nature+Conservancy"],
-    "poem2": "words"
+    kill you, and wish you hadn’t died.`,
+    "Spencer+Hill",
+    "The+Nature+Conservancy"]
 }
 
 export function getPoem(name) {

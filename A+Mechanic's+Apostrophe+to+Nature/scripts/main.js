@@ -15,7 +15,7 @@
 
 
 const poemtitle = document.createElement('h2');
-const title = document.createTextNode("A Mechanic's Apostrophe to Nature les gooo");
+const title = document.createTextNode("A Mechanic's Apostrophe to Nature");
 poemtitle.appendChild(title);
 
 document.getElementById("middlepane").appendChild(poemtitle);
@@ -29,7 +29,7 @@ let s = "hello!\nI am joe.";
 let poemstr = "hello joe!\nI am john.";
 alert(poemstr)
 
-import { getPoem } from "./poems.js";
+import { getPoem } from "../../poems.js";
 poemstr = getPoem("A+Mechanic's+Apostrophe+to+Nature")[0]
 
 alert(poemstr)
