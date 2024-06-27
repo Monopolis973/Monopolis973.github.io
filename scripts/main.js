@@ -34,6 +34,16 @@
 
 // button.textContent = "does this work?";
 
+
+
+
+
+
+
+
+
+// left panel/charity stuff is here
+
 let poemcharity = "The Nature Conservancy"
 
 let charitybutton = document.createElement("button");
@@ -71,3 +81,36 @@ let aboutchar = document.createElement("p");
 aboutchar.appendChild(document.createTextNode("description will go here"));
 
 document.getElementById("leftpane").appendChild(aboutchar);
+
+
+
+
+
+
+
+
+
+
+// right panel/links to featured poems go here
+
+const featuredworkslist = document.createElement("ul");
+let poemlist = getAuthorInfo(poemauth)[1];
+let listitems = [];
+let linkrefs = [];
+
+// alert(poemlist)
+
+import { generatehref } from "../../authors.js";
+
+// alert("import worked")
+
+for (let i = 0; i < poemlist.length; i++) {
+    listitems[i] = document.createElement("li");
+    linkrefs[i] = document.createElement("a");
+    linkrefs[i].href = generatehref(poemname);
+    linkrefs[i].appendChild(document.createTextNode(poemlist[i]));
+    listitems[i].appendChild(linkrefs[i]);
+    featuredworkslist.appendChild(listitems[i]);
+}
+
+document.getElementById("rightpanel").appendChild(featuredworkslist)

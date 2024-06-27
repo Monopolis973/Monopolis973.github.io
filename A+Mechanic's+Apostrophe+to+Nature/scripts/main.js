@@ -79,9 +79,11 @@ for (let i = 0; i < poemlist.length; i++) {
     linkrefs[i].href = generatehref(poemname);
     linkrefs[i].appendChild(document.createTextNode(poemlist[i]));
     listitems[i].appendChild(linkrefs[i]);
-    document.getElementById("rightpane").appendChild(listitems[i]);
+    otherworkslist.appendChild(listitems[i]);
     // alert("for loop is working 2")
-}
+};
+
+document.getElementById("rightpane").appendChild(otherworkslist);
 
 // alert("otherworks built");
 
