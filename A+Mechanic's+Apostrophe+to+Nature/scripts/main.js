@@ -68,7 +68,7 @@ alert(poemstr)
 //     console.log(data)
 //   })
 
-import { getPoem } from "poems";
+import { getPoem } from "./poems";
 poemstr = getPoem("A+Mechanic's+Apostrophe+to+Nature")[0]
 
 alert(peomstr)
