@@ -1,6 +1,6 @@
-let x = 431;
-const s = document.querySelector("#heading");
-s.textContent = "Hello, this is a test!";
+// let x = 431;
+// const s = document.querySelector("#heading");
+// s.textContent = "Hello, this is a test!";
 // s.textContent = x.toString();
 // alert("I dont know what this does") // gives a popup that says ""
 
