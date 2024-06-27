@@ -66,29 +66,33 @@ let poemlist = getAuthorInfo(poemauth)[1]
 let listitems = []
 let linkrefs = []
 
-// import { generatehref } from "../../authors.js";
+import { generatehref } from "../../authors.js";
 
-// for (let i = 0; i < poemlist.length; i++) {
-//     listitems[i] = document.createElement("li")
-//     linkrefs[i] = document.createElement("a")
-//     linkrefs[i].href = generatehref(poemname)
-//     linkrefs[i].appendChild(document.createTextNode(poemlist[i]))
-//     listitems[i].appendChild(linkrefs[i])
-//     document.getElementById("rightpane").appendChild(listitems[i])
-// }
+for (let i = 0; i < poemlist.length; i++) {
+    listitems[i] = document.createElement("li")
+    linkrefs[i] = document.createElement("a")
+    linkrefs[i].href = generatehref(poemname)
+    linkrefs[i].appendChild(document.createTextNode(poemlist[i]))
+    listitems[i].appendChild(linkrefs[i])
+    document.getElementById("rightpane").appendChild(listitems[i])
+}
 
-// alert("otherworks built")
+alert("otherworks built")
 
 
-// alert("building charity")
+alert("building charity")
 
-// // import image
-// import { convertSpaces } from "../../authors.js";
+// import image
+import { convertSpaces } from "../../authors.js";
 
-// let charitiybutton = document.createElement("button")
-// charitiybutton.class = "invisible"
+let charitiybutton = document.createElement("button")
+charitiybutton.class = "invisible"
+charitiybutton.id = "charitybutton"
 
-// let charityimage = document.createElement("img")
-// charityimage.src = "../charities/" + convertSpaces(poemcharity) + "/logo.svg"
-// charityimage.width = "100%"
+import { link } from ("../../charities/" + convertSpaces(poemcharity) + "/about.js");
+charitybutton.addEventListener("click", () => window.location.href = link());
+
+let charityimage = document.createElement("img")
+charityimage.src = "../charities/" + convertSpaces(poemcharity) + "/logo.svg"
+charityimage.width = "100%"
 
