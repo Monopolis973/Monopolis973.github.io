@@ -91,36 +91,38 @@ alert("building charity")
 // import image
 import { convertSpaces } from "../../authors.js";
 
-let charitybutton = document.createElement("button")
-charitybutton.class = "invisible"
-charitybutton.id = "charitybutton"
+let charitybutton = document.createElement("button");
+charitybutton.class = "invisible";
+charitybutton.id = "charitybutton";
 
-let charityfileloc = "../../charities/" + convertSpaces(poemcharity) + "/about.js"
-import { link } from charityfileloc;
+let charityfileloc = "../../charities/" + convertSpaces(poemcharity) + "/about.js";
+// import { link } from charityfileloc;
+eval(`import { link } from ` + charityfileloc + ";");
 charitybutton.addEventListener("click", () => window.location.href = link());
 
-let charityimage = document.createElement("img")
-charityimage.src = "../charities/" + convertSpaces(poemcharity) + "/logo.svg"
-charityimage.width = "100%"
+let charityimage = document.createElement("img");
+charityimage.src = "../charities/" + convertSpaces(poemcharity) + "/logo.svg";
+charityimage.width = "100%";
 
-let charitytitle = document.createElement("h2")
-charitytitle.appendChild(document.createTextNode(poemcharity))
+let charitytitle = document.createElement("h2");
+charitytitle.appendChild(document.createTextNode(poemcharity));
 
-charitybutton.appendChild(charityimage)
-charitybutton.appendChild(charitytitle)
-document.getElementById("leftpane").appendChild(charitybutton)
+charitybutton.appendChild(charityimage);
+charitybutton.appendChild(charitytitle);
+document.getElementById("leftpane").appendChild(charitybutton);
 
-document.getElementById("leftpane").appendChild(document.createElement("br"))
-document.getElementById("leftpane").appendChild(document.createElement("br"))
+document.getElementById("leftpane").appendChild(document.createElement("br"));
+document.getElementById("leftpane").appendChild(document.createElement("br"));
 
 // write the abt me
 
-let aboutchar = document.createElement("p")
+let aboutchar = document.createElement("p");
 
-import { about } from charityfileloc;
-aboutchar.appendChild(document.createTextNode(about()))
+// import { about } from charityfileloc;
+eval(`import { about } from ` + charityfileloc + ";");
+aboutchar.appendChild(document.createTextNode(about()));
 
-document.getElementById("leftpane").appendChild(aboutchar)
+document.getElementById("leftpane").appendChild(aboutchar);
 
 
 
