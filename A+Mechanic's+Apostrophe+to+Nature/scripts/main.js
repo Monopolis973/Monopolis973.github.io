@@ -72,7 +72,7 @@ import { generatehref } from "../../authors.js";
 
 alert("import worked")
 
-for (let i = 0; i <= poemlist.length; i++) {
+for (let i = 0; i < poemlist.length; i++) {
     alert("for loop is working 1")
     listitems[i] = document.createElement("li")
     linkrefs[i] = document.createElement("a")
@@ -91,9 +91,9 @@ alert("otherworks built")
 // // import image
 // import { convertSpaces } from "../../authors.js";
 
-// let charitiybutton = document.createElement("button")
-// charitiybutton.class = "invisible"
-// charitiybutton.id = "charitybutton"
+// let charitybutton = document.createElement("button")
+// charitybutton.class = "invisible"
+// charitybutton.id = "charitybutton"
 
 // import { link } from ("../../charities/" + convertSpaces(poemcharity) + "/about.js");
 // charitybutton.addEventListener("click", () => window.location.href = link());
@@ -102,15 +102,16 @@ alert("otherworks built")
 // charityimage.src = "../charities/" + convertSpaces(poemcharity) + "/logo.svg"
 // charityimage.width = "100%"
 
-// charitiybutton.appendChild(charityimage)
-// document.getElementById("leftpane").appendChild(charitiybutton)
+// let charitytitle = document.createElement("h2")
+// charitytitle.appendChild(document.createTextNode(poemcharity))
+
+// charitybutton.appendChild(charityimage)
+// charitybutton.appendChild(charitytitle)
+// document.getElementById("leftpane").appendChild(charitybutton)
 
 // document.getElementById("leftpane").appendChild(document.createElement("br"))
 // document.getElementById("leftpane").appendChild(document.createElement("br"))
 
 // // write the abt me
-
-// let charitytitle = document.createElement("h2")
-// charitytitle.appendChild(document.createTextNode(poemcharity))
 
 

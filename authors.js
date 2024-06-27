@@ -11,12 +11,12 @@ export function getAuthorInfo(name) {
 
 export function convertSpaces (strToConvert) {
     let toReturn = ""
-    for (c of strToConvert) {
-        if (c == " ") {
+    for (let i = 0; i < strToConvert.length; i++) {
+        if (strToConvert.charAt(i) == " ") {
             toReturn = toReturn + "+"
         }
         else {
-            toReturn = toReturn + c
+            toReturn = toReturn + strToConvert.charAt(i)
         }
     }
     return toReturn
