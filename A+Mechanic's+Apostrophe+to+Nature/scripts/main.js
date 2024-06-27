@@ -70,14 +70,17 @@ alert(poemlist)
 
 import { generatehref } from "../../authors.js";
 
+alert("import worked")
+
 for (let i = 0; i <= poemlist.length; i++) {
-    alert(i)
+    alert("for loop is working 1")
     listitems[i] = document.createElement("li")
     linkrefs[i] = document.createElement("a")
     linkrefs[i].href = generatehref(poemname)
     linkrefs[i].appendChild(document.createTextNode(poemlist[i]))
     listitems[i].appendChild(linkrefs[i])
     document.getElementById("rightpane").appendChild(listitems[i])
+    alert("for loop is working 2")
 }
 
 alert("otherworks built")
