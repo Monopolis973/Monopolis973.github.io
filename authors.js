@@ -9,7 +9,21 @@ export function getAuthorInfo(name) {
 }
 
 
-import { convertSpaces } from "./scripts/main"
+export function convertSpaces (strToConvert) {
+    let toReturn = ""
+    for (c of strToConvert) {
+        if (c == " ") {
+            toReturn = toReturn + "+"
+        }
+        else {
+            toReturn = toReturn + c
+        }
+    }
+    return toReturn
+}
+
+
+// import { convertSpaces } from "./scripts/main"
 export function generatehref(poemname) {
     // let ppath = ""
     // for (c of poemname) {

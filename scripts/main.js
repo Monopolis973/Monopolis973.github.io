@@ -32,16 +32,3 @@ charitybutton.addEventListener("click", () => window.location.href = "https://pr
 // button.addEventListener("click", setUsername);
 
 // button.textContent = "does this work?";
-
-export function convertSpaces (strToConvert) {
-    let toReturn = ""
-    for (c of strToConvert) {
-        if (c == " ") {
-            toReturn = toReturn + "+"
-        }
-        else {
-            toReturn = toReturn + c
-        }
-    }
-    return toReturn
-}

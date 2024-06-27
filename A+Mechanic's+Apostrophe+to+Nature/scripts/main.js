@@ -83,7 +83,7 @@ let linkrefs = []
 // alert("building charity")
 
 // // import image
-// import { convertSpaces } from "../../scripts/main.js";
+// import { convertSpaces } from "../../authors.js";
 
 // let charitiybutton = document.createElement("button")
 // charitiybutton.class = "invisible"
