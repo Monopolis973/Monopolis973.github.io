@@ -28,7 +28,7 @@ for (const c of poemstr) {
 document.getElementById("middlepane").appendChild(poemtitle);
 document.getElementById("middlepane").appendChild(poemhtml);
 
-alert("poem built");
+// alert("poem built");
 
 
 // generate the poet bio
@@ -83,16 +83,18 @@ for (let i = 0; i < poemlist.length; i++) {
     // alert("for loop is working 2")
 }
 
-alert("otherworks built");
+// alert("otherworks built");
 
 
-alert("building charity");
+// alert("building charity");
 
 // import image
-import { convertSpaces } from "../../authors.js";
+// import { convertSpaces } from "../../authors.js";
 
 let charitybutton = document.createElement("button");
-charitybutton.class = "invisible";
+// charitybutton.class = "invisible";  // do this manually
+charitybutton.border = "0"
+charitybutton.backgroundColor = "rgba(0, 0, 0, 0)"
 charitybutton.id = "charitybutton";
 
 import { getLink } from "../../charities/charityinfo.js";
@@ -106,7 +108,7 @@ let charitytitle = document.createElement("h2");
 charitytitle.appendChild(document.createTextNode(poemcharity));
 
 charitybutton.appendChild(charityimage);
-charitybutton.appendChild(charitytitle);
+// charitybutton.appendChild(charitytitle);  // uncomment this if u want the title back
 document.getElementById("leftpane").appendChild(charitybutton);
 
 document.getElementById("leftpane").appendChild(document.createElement("br"));
@@ -121,7 +123,7 @@ aboutchar.appendChild(document.createTextNode(getDescription(poemcharity)));
 
 document.getElementById("leftpane").appendChild(aboutchar);
 
-alert("charity built")
+// alert("charity built")
 
 
 
