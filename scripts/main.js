@@ -44,7 +44,7 @@
 
 // left pane/charity stuff is here
 
-let poemcharity = "The Nature Conservancy"
+let featuredCharity = "The Nature Conservancy"
 
 let charitybutton = document.createElement("button");
 charitybutton.class = "invisible";  // do this manually
@@ -56,14 +56,17 @@ charitybutton.id = "charitybutton";
 
 import { getLink } from "../charities/charityinfo.js";
 
-charitybutton.addEventListener("click", () => window.location.href = getLink(poemcharity));
+charitybutton.addEventListener("click", () => window.location.href = getLink(featuredCharity));
+
+
+import { getLogo } from "../charities/charityinfo.js";
 
 let charityimage = document.createElement("img");
-charityimage.src = "charities/" + poemcharity + "svg";
+charityimage.src = "charities/" + getLogo(poemcharity);
 charityimage.style.width = "100%"; //String(document.documentElement.clientWidth / 5);
 
 let charitytitle = document.createElement("h2");
-charitytitle.appendChild(document.createTextNode(poemcharity));
+charitytitle.appendChild(document.createTextNode(featuredCharity));
 
 charitybutton.appendChild(charityimage);
 // charitybutton.appendChild(charitytitle);  // uncomment this if u want the title back
@@ -80,7 +83,7 @@ document.getElementById("leftpane").appendChild(document.createElement("br"));
 let aboutchar = document.createElement("p");
 
 import { getDescription } from "../charities/charityinfo.js";
-aboutchar.appendChild(document.createTextNode(getDescription(poemcharity)));
+aboutchar.appendChild(document.createTextNode(getDescription(featuredCharity)));
 
 document.getElementById("leftpane").appendChild(aboutchar);
 
@@ -107,7 +110,7 @@ import { convertSpaces } from "../authors.js";
 
 // alert("import worked")
 
-for (let i = 0; i < poemlist.length; i++) {
+for (let i = 0; (i < poemlist.length) && (i < 10); i++) {
     listitems[i] = document.createElement("li");
     linkrefs[i] = document.createElement("a");
     linkrefs[i].href = "Poems/" + convertSpaces(poemlist[i]) + "/index.html";
