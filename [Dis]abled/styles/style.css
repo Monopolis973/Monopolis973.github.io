@@ -14,6 +14,7 @@ aside {
 #middlepane {
   width: 60%;
   /* height: 100vh; */
+  min-height: 100vh;
   background-color: royalblue;
   padding: 10px 40px 70px 40px;
 }
@@ -41,12 +42,14 @@ aside {
 #leftpane {
   width: 20%;
   /* height: 100vh; */
+  min-height: 100vh;
   background-color: yellow;
 }
 
 #rightpane {
   width: 20%;
   /* height: 100vh; */
+  min-height: 100vh;
   background-color: rosybrown;
 }
 
