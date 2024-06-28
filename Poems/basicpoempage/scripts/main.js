@@ -7,7 +7,7 @@ poemtitle.appendChild(title);
 
 
 
-import { getPoem } from "../../poems.js";
+import { getPoem } from "../../../poems.js";
 let poeminfo = getPoem(poemname);
 let poemstr = poeminfo[0];
 let poemauth = poeminfo[1];
@@ -49,7 +49,7 @@ authname.appendChild(document.createTextNode(poemauth));
 biohtml.appendChild(authname);
 
 // get and add the rest of the bio
-import { getAuthorInfo } from "../../authors.js";
+import { getAuthorInfo } from "../../../authors.js";
 let biostr = getAuthorInfo(poemauth)[0];
 biohtml.appendChild(document.createTextNode(" " + biostr));
 
@@ -72,7 +72,7 @@ let listitems = [];
 let linkrefs = [];
 
 
-import { generatehref } from "../../authors.js";
+import { generatehref } from "../../../authors.js";
 
 for (let i = 0; i < poemlist.length; i++) {
     listitems[i] = document.createElement("li");
@@ -98,10 +98,10 @@ charitybutton.style.border = "0";
 charitybutton.style.background = "rgba(0, 0, 0, 0)";
 charitybutton.id = "charitybutton";
 
-import { getLink } from "../../charities/charityinfo.js";
+import { getLink } from "../../../charities/charityinfo.js";
 charitybutton.addEventListener("click", () => window.location.href = getLink(poemcharity));
 
-import { getLogo } from "../../charities/charityinfo.js";
+import { getLogo } from "../../../charities/charityinfo.js";
 
 let charityimage = document.createElement("img");
 charityimage.src = "../charities/" + getLogo(poemcharity);
@@ -120,7 +120,7 @@ document.getElementById("leftpane").appendChild(document.createElement("br"));
 
 let aboutchar = document.createElement("p");
 
-import { getDescription } from "../../charities/charityinfo.js";
+import { getDescription } from "../../../charities/charityinfo.js";
 aboutchar.appendChild(document.createTextNode(getDescription(poemcharity)));
 
 document.getElementById("leftpane").appendChild(aboutchar);
