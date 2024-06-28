@@ -92,9 +92,9 @@ document.getElementById("leftpane").appendChild(aboutchar);
 
 
 // right pane/links to featured poems go here
-
+import { getAllPoems } from "../poems";
 const featuredworkslist = document.createElement("ul");
-let poemlist = ["A Nechanic's Apostrophe to Nature"];
+let poemlist = getAllPoems();
 let listitems = [];
 let linkrefs = [];
 

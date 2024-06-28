@@ -61,5 +61,9 @@ var poems = {
 };
 
 export function getPoem(name) {
-    return poems[name]
+    return poems[name];
+};
+
+export function getAllPoems() {
+    return Object.keys(poems);
 }
