@@ -1,3 +1,12 @@
+// top banner
+
+let homebutton = document.querySelector("#homepagebutton");
+homebutton.addEventListener("click", () => window.location.href = "../../index.html");
+
+
+
+
+
 let poemname = "A Mechanic's Apostrophe to Nature"
 
 // set heading

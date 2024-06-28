@@ -1,3 +1,12 @@
+// top banner
+
+let homebutton = document.querySelector("#homepagebutton");
+homebutton.addEventListener("click", () => window.location.href = "../../index.html");
+
+
+
+
+
 let poemname = "" // update for each page
 
 // set heading
@@ -29,7 +38,6 @@ document.getElementById("middlepane").appendChild(poemtitle);
 document.getElementById("middlepane").appendChild(poemhtml);
 
 // alert("poem built");
-
 
 
 
