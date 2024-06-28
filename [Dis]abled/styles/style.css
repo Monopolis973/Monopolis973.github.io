@@ -14,14 +14,13 @@ aside {
 #middlepane {
   width: 60%;
   /* height: 100vh; */
-  min-height: 100vh;
   background-color: royalblue;
   padding: 10px 40px 70px 40px;
 }
 
 .container {
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 130px);
   /* height: 100vh; */
 }
 
@@ -42,14 +41,12 @@ aside {
 #leftpane {
   width: 20%;
   /* height: 100vh; */
-  min-height: 100vh;
   background-color: yellow;
 }
 
 #rightpane {
   width: 20%;
   /* height: 100vh; */
-  min-height: 100vh;
   background-color: rosybrown;
 }
 
