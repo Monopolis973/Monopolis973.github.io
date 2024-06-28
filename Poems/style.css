@@ -4,7 +4,7 @@ aside {
 
 #middlepane {
   width: 60%;
-  min-height: (100vh - 150px);  /* 150 is the sum of pixels of vertical padding, titlepane, and bottompane */
+  min-height: calc(100vh - 150px);  /* 150 is the sum of pixels of vertical padding, titlepane, and bottompane */
   background-color: royalblue;
   padding: 10px 40px 10px 40px;
 }
