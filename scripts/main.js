@@ -42,7 +42,7 @@
 
 
 
-// left panel/charity stuff is here
+// left pane/charity stuff is here
 
 let poemcharity = "The Nature Conservancy"
 
@@ -57,7 +57,7 @@ charitybutton.id = "charitybutton";
 charitybutton.addEventListener("click", () => window.location.href = "https://google.com");
 
 let charityimage = document.createElement("img");
-charityimage.src = "charities/" + poemcharity + ".svg";
+charityimage.src = "charities/" + poemcharity;
 charityimage.style.width = "100%"; //String(document.documentElement.clientWidth / 5);
 
 let charitytitle = document.createElement("h2");
@@ -91,26 +91,26 @@ document.getElementById("leftpane").appendChild(aboutchar);
 
 
 
-// right panel/links to featured poems go here
+// right pane/links to featured poems go here
 
 const featuredworkslist = document.createElement("ul");
-let poemlist = getAuthorInfo(poemauth)[1];
+let poemlist = ["A Nechanic's Apostrophe to Nature"];
 let listitems = [];
 let linkrefs = [];
 
 // alert(poemlist)
 
-import { generatehref } from "../../authors.js";
+// import { generatehref } from "../../authors.js";
 
 // alert("import worked")
 
 for (let i = 0; i < poemlist.length; i++) {
     listitems[i] = document.createElement("li");
     linkrefs[i] = document.createElement("a");
-    linkrefs[i].href = generatehref(poemname);
+    linkrefs[i].href = "https://google.com";
     linkrefs[i].appendChild(document.createTextNode(poemlist[i]));
     listitems[i].appendChild(linkrefs[i]);
     featuredworkslist.appendChild(listitems[i]);
 }
 
-document.getElementById("rightpanel").appendChild(featuredworkslist)
+document.getElementById("rightpane").appendChild(featuredworkslist)
