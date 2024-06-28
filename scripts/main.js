@@ -62,7 +62,7 @@ charitybutton.addEventListener("click", () => window.location.href = getLink(fea
 import { getLogo } from "../charities/charityinfo.js";
 
 let charityimage = document.createElement("img");
-charityimage.src = "charities/" + getLogo(poemcharity);
+charityimage.src = "charities/" + getLogo(featuredCharity);
 charityimage.style.width = "100%"; //String(document.documentElement.clientWidth / 5);
 
 let charitytitle = document.createElement("h2");
