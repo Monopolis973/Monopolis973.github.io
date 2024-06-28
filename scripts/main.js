@@ -92,7 +92,7 @@ document.getElementById("leftpane").appendChild(aboutchar);
 
 
 // right pane/links to featured poems go here
-import { getAllPoems } from "../poems";
+import { getAllPoems } from "../poems.js";
 const featuredworkslist = document.createElement("ul");
 let poemlist = getAllPoems();
 let listitems = [];
