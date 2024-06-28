@@ -102,8 +102,10 @@ charitybutton.id = "charitybutton";
 import { getLink } from "../../charities/charityinfo.js";
 charitybutton.addEventListener("click", () => window.location.href = getLink(poemcharity));
 
+
+import { getLogo } from "../../charities/charityinfo.js";
 let charityimage = document.createElement("img");
-charityimage.src = "../charities/" + poemcharity + ".svg";
+charityimage.src = "../charities/" + getLogo(poemcharity);
 charityimage.style.width = "100%";
 
 let charitytitle = document.createElement("h2");

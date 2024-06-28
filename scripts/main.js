@@ -57,7 +57,7 @@ charitybutton.id = "charitybutton";
 charitybutton.addEventListener("click", () => window.location.href = "https://google.com");
 
 let charityimage = document.createElement("img");
-charityimage.src = "charities/" + poemcharity;
+charityimage.src = "charities/" + poemcharity + "svg";
 charityimage.style.width = "100%"; //String(document.documentElement.clientWidth / 5);
 
 let charitytitle = document.createElement("h2");
