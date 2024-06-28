@@ -54,7 +54,9 @@ charitybutton.style.border = "0"
 charitybutton.style.background = "rgba(0, 0, 0, 0)";
 charitybutton.id = "charitybutton";
 
-charitybutton.addEventListener("click", () => window.location.href = "https://google.com");
+import { getLink } from "../charities/charityinfo.js";
+
+charitybutton.addEventListener("click", () => window.location.href = getLink(poemcharity));
 
 let charityimage = document.createElement("img");
 charityimage.src = "charities/" + poemcharity + "svg";
@@ -64,7 +66,7 @@ let charitytitle = document.createElement("h2");
 charitytitle.appendChild(document.createTextNode(poemcharity));
 
 charitybutton.appendChild(charityimage);
-charitybutton.appendChild(charitytitle);  // uncomment this if u want the title back
+// charitybutton.appendChild(charitytitle);  // uncomment this if u want the title back
 document.getElementById("leftpane").appendChild(charitybutton);
 
 // document.getElementById("leftpane").appendChild(charityimage);
@@ -77,8 +79,8 @@ document.getElementById("leftpane").appendChild(document.createElement("br"));
 
 let aboutchar = document.createElement("p");
 
-// import { getDescription } from "../../charities/charityinfo.js";
-aboutchar.appendChild(document.createTextNode("description will go here"));
+import { getDescription } from "../charities/charityinfo.js";
+aboutchar.appendChild(document.createTextNode(getDescription(poemcharity)));
 
 document.getElementById("leftpane").appendChild(aboutchar);
 
@@ -101,13 +103,14 @@ let linkrefs = [];
 // alert(poemlist)
 
 // import { generatehref } from "../../authors.js";
+import { convertSpaces } from "../authors.js";
 
 // alert("import worked")
 
 for (let i = 0; i < poemlist.length; i++) {
     listitems[i] = document.createElement("li");
     linkrefs[i] = document.createElement("a");
-    linkrefs[i].href = "https://google.com";
+    linkrefs[i].href = "Poems/" + convertSpaces(poemlist[i]) + "/index.html";
     linkrefs[i].appendChild(document.createTextNode(poemlist[i]));
     listitems[i].appendChild(linkrefs[i]);
     featuredworkslist.appendChild(listitems[i]);
