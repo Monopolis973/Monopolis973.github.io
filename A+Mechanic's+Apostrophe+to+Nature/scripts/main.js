@@ -76,7 +76,7 @@ for (let i = 0; i < poemlist.length; i++) {
     // alert("for loop is working 1")
     listitems[i] = document.createElement("li");
     linkrefs[i] = document.createElement("a");
-    linkrefs[i].href = generatehref(poemname);
+    linkrefs[i].href = generatehref(poemlist[i]);
     linkrefs[i].appendChild(document.createTextNode(poemlist[i]));
     listitems[i].appendChild(linkrefs[i]);
     otherworkslist.appendChild(listitems[i]);
