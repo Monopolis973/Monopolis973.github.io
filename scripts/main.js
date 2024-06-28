@@ -20,8 +20,8 @@
 // };
 
 // UNCOMMENT THIS RMEMEBTER
-// let charitybutton = document.querySelector("#charitybutton");
-// charitybutton.addEventListener("click", () => window.location.href = "https://preserve.nature.org/page/80429/donate/1");
+let homebutton = document.querySelector("#homepagebutton");
+homebutton.addEventListener("click", () => window.location.href = "https://Monopolis973.github.io");
 
 // if (!localStorage.getItem("name")) {
 //     setUsername();
@@ -41,54 +41,52 @@
 
 
 
+// // left pane/charity stuff is here
 
-// left pane/charity stuff is here
+// let featuredCharity = "The Nature Conservancy"
 
-let featuredCharity = "The Nature Conservancy"
+// let charitybutton = document.createElement("button");
+// charitybutton.class = "invisible";  // do this manually
+// // charitybutton.border = "0";
+// // charitybutton.backgroundColor = "rgba(0, 0, 0, 0)";
+// charitybutton.style.border = "0"
+// charitybutton.style.background = "rgba(0, 0, 0, 0)";
+// charitybutton.id = "charitybutton";
 
-let charitybutton = document.createElement("button");
-charitybutton.class = "invisible";  // do this manually
-// charitybutton.border = "0";
-// charitybutton.backgroundColor = "rgba(0, 0, 0, 0)";
-charitybutton.style.border = "0"
-charitybutton.style.background = "rgba(0, 0, 0, 0)";
-charitybutton.id = "charitybutton";
+// import { getLink } from "../charities/charityinfo.js";
 
-import { getLink } from "../charities/charityinfo.js";
+// charitybutton.addEventListener("click", () => window.location.href = getLink(featuredCharity));
 
-charitybutton.addEventListener("click", () => window.location.href = getLink(featuredCharity));
-
-
-import { getLogo } from "../charities/charityinfo.js";
-
-let charityimage = document.createElement("img");
-charityimage.src = "charities/" + getLogo(featuredCharity);
-charityimage.style.width = "100%"; //String(document.documentElement.clientWidth / 5);
-
-let charitytitle = document.createElement("h2");
-charitytitle.appendChild(document.createTextNode(featuredCharity));
-
-charitybutton.appendChild(charityimage);
-// charitybutton.appendChild(charitytitle);  // uncomment this if u want the title back
-document.getElementById("leftpane").appendChild(charitybutton);
-
-// document.getElementById("leftpane").appendChild(charityimage);
+// document.querySelector("leftpane").addEventListener("click", () => window.location.href = getLink(featuredCharity)); // this makes it so entire thing is button
 
 
-document.getElementById("leftpane").appendChild(document.createElement("br"));
-document.getElementById("leftpane").appendChild(document.createElement("br"));
+// import { getLogo } from "../charities/charityinfo.js";
 
-// write the abt charity
+// let charityimage = document.createElement("img");
+// charityimage.src = "charities/" + getLogo(featuredCharity);
+// charityimage.style.width = "100%"; //String(document.documentElement.clientWidth / 5);
 
-let aboutchar = document.createElement("p");
+// let charitytitle = document.createElement("h2");
+// charitytitle.appendChild(document.createTextNode(featuredCharity));
 
-import { getDescription } from "../charities/charityinfo.js";
-aboutchar.appendChild(document.createTextNode(getDescription(featuredCharity)));
+// charitybutton.appendChild(charityimage);
+// // charitybutton.appendChild(charitytitle);  // uncomment this if u want the title back
+// document.getElementById("leftpane").appendChild(charitybutton);
 
-document.getElementById("leftpane").appendChild(aboutchar);
+// // document.getElementById("leftpane").appendChild(charityimage);
 
 
+// document.getElementById("leftpane").appendChild(document.createElement("br"));
+// document.getElementById("leftpane").appendChild(document.createElement("br"));
 
+// // write the abt charity
+
+// let aboutchar = document.createElement("p");
+
+// import { getDescription } from "../charities/charityinfo.js";
+// aboutchar.appendChild(document.createTextNode(getDescription(featuredCharity)));
+
+// document.getElementById("leftpane").appendChild(aboutchar);
 
 
 
@@ -96,27 +94,30 @@ document.getElementById("leftpane").appendChild(aboutchar);
 
 
 
-// right pane/links to featured poems go here
-import { getAllPoems } from "../poems.js";
-const featuredworkslist = document.createElement("ul");
-let poemlist = getAllPoems();
-let listitems = [];
-let linkrefs = [];
 
-// alert(poemlist)
 
-// import { generatehref } from "../../authors.js";
-import { convertSpaces } from "../authors.js";
 
-// alert("import worked")
+// // right pane/links to featured poems go here
+// import { getAllPoems } from "../poems.js";
+// const featuredworkslist = document.createElement("ul");
+// let poemlist = getAllPoems();
+// let listitems = [];
+// let linkrefs = [];
 
-for (let i = 0; (i < poemlist.length) && (i < 10); i++) {
-    listitems[i] = document.createElement("li");
-    linkrefs[i] = document.createElement("a");
-    linkrefs[i].href = "Poems/" + convertSpaces(poemlist[i]) + "/index.html";
-    linkrefs[i].appendChild(document.createTextNode(poemlist[i]));
-    listitems[i].appendChild(linkrefs[i]);
-    featuredworkslist.appendChild(listitems[i]);
-}
+// // alert(poemlist)
 
-document.getElementById("rightpane").appendChild(featuredworkslist)
+// // import { generatehref } from "../../authors.js";
+// import { convertSpaces } from "../authors.js";
+
+// // alert("import worked")
+
+// for (let i = 0; (i < poemlist.length) && (i < 10); i++) {
+//     listitems[i] = document.createElement("li");
+//     linkrefs[i] = document.createElement("a");
+//     linkrefs[i].href = "Poems/" + convertSpaces(poemlist[i]) + "/index.html";
+//     linkrefs[i].appendChild(document.createTextNode(poemlist[i]));
+//     listitems[i].appendChild(linkrefs[i]);
+//     featuredworkslist.appendChild(listitems[i]);
+// }
+
+// document.getElementById("rightpane").appendChild(featuredworkslist)

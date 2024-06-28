@@ -1,13 +1,13 @@
 aside {
   padding: 80px 30px 10px 20px;
-  background-color: beige;
+  background-color: lightgray;
 }
 
 #middlepane {
   width: 60%;
   min-height: calc(100vh - 150px);  /* 150 is the sum of pixels of vertical padding, titlepane, and bottompane */
   /* background-color: royalblue; */
-  background-color: lightgray;
+  background-color: beige;
   padding: 10px 40px 10px 40px;
 }
 
@@ -21,6 +21,7 @@ aside {
   background-color: gray;
   /* background-color: #4da6ff; */
   display: flex;
+  position: fixed;
 }
 
 #leftpane {
@@ -36,7 +37,7 @@ aside {
 #bottompane {
   width: 100%;
   height: 30px;
-  background-color: orange;
+  background-color: darkgray;
   display: flex;
 }
 
