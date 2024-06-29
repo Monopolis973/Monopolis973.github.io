@@ -57,7 +57,7 @@ import { getLink } from "../charities/charityinfo.js";
 
 charitybutton.addEventListener("click", () => window.location.href = getLink(featuredCharity));
 
-document.querySelector("leftpane").addEventListener("click", () => window.location.href = getLink(featuredCharity)); // this makes it so entire thing is button
+document.getElementById("leftpane").addEventListener("click", () => window.location.href = getLink(featuredCharity)); // this makes it so entire thing is button
 
 
 import { getLogo } from "../charities/charityinfo.js";
