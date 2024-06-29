@@ -21,7 +21,9 @@ aside {
   background-color: gray;
   /* background-color: #4da6ff; */
   display: flex;
-  position: fixed;
+  /* position: fixed; */
+  position: sticky;
+  top: 0;
 }
 
 #leftpane {
