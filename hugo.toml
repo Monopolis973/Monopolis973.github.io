@@ -1,4 +1,4 @@
-title = "Again again, who knows"
+title = "Spencer"
 baseURL = 'https://hba.sid.one/'
 
 # This is what goes in <html lang="">
@@ -68,10 +68,15 @@ theme = "hugo-blog-awesome"
     url = '/posts/'
     weight = 20
   [[Languages.en-gb.menu.main]]
-    pageRef="about"
-    name = 'About'
-    url = '/about/'
+    pageRef="poems"
+    name = 'Poetry'
+    url = '/poems/'
     weight = 30
+  [[Languages.en-gb.menu.main]]
+    pageRef="me" # needs to match the name of the .md file
+    name = 'Me'
+    url = '/me/'
+    weight = 15 # defines order in which they are listed
 
 [Languages.en-gb.params]
   sitename = "again, who knows"
@@ -99,9 +104,9 @@ theme = "hugo-blog-awesome"
 [Languages.en-gb.params.author]
   avatar = "avatar.jpg" # put the file in assets folder; also ensure that image has same height and width
   # Note: image is not rendered if the resource(avatar image) is not found. No error is displayed.
-  intro = "who knows"
+  intro = "Pause. Breathe. Continue."
   name = "Spencer Hill"
-  description = "A fast, minimalistic Hugo theme with light and dark mode support, for running a personal site or blog."
+  description = "Take your time. There is a rush, but giving into it loses all purpose."
 
 # Allow to override webmanifest options
 [Languages.en-gb.params.webmanifest]

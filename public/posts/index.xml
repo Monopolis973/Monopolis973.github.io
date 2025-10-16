@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Again again, who knows</title>
+    <title>Posts on Spencer</title>
     <link>http://localhost:1313/posts/</link>
-    <description>Recent content in Posts on Again again, who knows</description>
+    <description>Recent content in Posts on Spencer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 05 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 08 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The Beginning</title>
       <link>http://localhost:1313/posts/blog1/</link>
-      <pubDate>Sun, 05 Oct 2025 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 08 Oct 2025 00:00:00 +0000</pubDate>
       
       <guid>http://localhost:1313/posts/blog1/</guid>
       
-      <description>&lt;p&gt;Websites are a strange thing.
-In the modern day, we are so used to the internet giants (google, amazon, etc.) that we don&amp;rsquo;t realize&lt;/p&gt;</description>
+      <description>&lt;p&gt;I am an island; you probably are as well.&lt;br&gt;
+I have never really used social media, as I was brought up with people always telling me how terrible and harmful it is. This is true, to an extent.&lt;/p&gt;</description>
       
     </item>
     

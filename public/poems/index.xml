@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Poems on Spencer</title>
+    <link>http://localhost:1313/poems/</link>
+    <description>Recent content in Poems on Spencer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Fri, 03 May 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/poems/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Church</title>
+      <link>http://localhost:1313/poems/church/</link>
+      <pubDate>Fri, 03 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/poems/church/</guid>
+      
+      <description>&lt;p&gt;My socks are chalk white.&lt;br&gt;
+Mom yells at me, they stand out.&lt;br&gt;
+Wear coal black instead.&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Sand Dollar</title>
+      <link>http://localhost:1313/poems/sand-dollar/</link>
+      <pubDate>Wed, 13 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/poems/sand-dollar/</guid>
+      
+      <description>&lt;p&gt;You reach down to pick it up&lt;br&gt;
+From underneath the waves, but&lt;br&gt;
+Then it is obscured in muck&lt;br&gt;
+The dust the sand that you yourself have&lt;br&gt;
+Stirred into the water, and so&lt;br&gt;
+You must wait patiently&lt;br&gt;
+Until the path finally clears,&lt;br&gt;
+And then and only then&lt;br&gt;
+Can you try again&lt;br&gt;
+To reach it.&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

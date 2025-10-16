@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Pages on Again again, who knows</title>
+    <title>Pages on Spencer</title>
     <link>http://localhost:1313/pages/</link>
-    <description>Recent content in Pages on Again again, who knows</description>
+    <description>Recent content in Pages on Spencer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language><atom:link href="http://localhost:1313/pages/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>About</title>
-      <link>http://localhost:1313/pages/about/</link>
+      <title>Hi!</title>
+      <link>http://localhost:1313/pages/me/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/pages/about/</guid>
+      <guid>http://localhost:1313/pages/me/</guid>
       
-      <description>&lt;p&gt;Written in Go, Hugo is an open source static site generator available under the &lt;a href=&#34;https://github.com/gohugoio/hugo/blob/master/LICENSE&#34;&gt;Apache Licence 2.0.&lt;/a&gt; Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.&lt;/p&gt;
-&lt;p&gt;Hugo makes use of a variety of open source projects including:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/yuin/goldmark&#34;&gt;https://github.com/yuin/goldmark&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/alecthomas/chroma&#34;&gt;https://github.com/alecthomas/chroma&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/muesli/smartcrop&#34;&gt;https://github.com/muesli/smartcrop&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/spf13/cobra&#34;&gt;https://github.com/spf13/cobra&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/spf13/viper&#34;&gt;https://github.com/spf13/viper&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.&lt;/p&gt;</description>
+      <description>&lt;!-- I&#39;m Spencer Hill, although that doesn&#39;t tell you much. I will introduce myself in a moment, but first we should have a quick discussion about the internet, growth, and identity, or none of what follows will seem reasonable at all.
+
+The internet, in my mind, has three large positives:
+1. Long distance connections with other people, so you can meet cool folks and have good conversations with them
+2. Easy access to massive amounts of information, so you can learn and grow really fast and consistently
+3. [i know i had something here, but i dont remember what :( ]
+
+On the other hand, it also has many downsides, including:
+1. Long distance connections with other people, allowing you to build your own echo chambers and radicalize your own beliefs without any real opposition
+2. Easy access to massive amounts of information, leading to many instances of false information and confirmation bias
+3. [i know i had something here, but i dont remember what :( ]
+
+I want to use this website to maximize the positives and minimize the negatives (reasonable, right?), and that means laying a few ground rules. --&gt;
+&lt;p&gt;Identity. I believe we are all some strange mix of the stories we tell ourselves and how others write you into their own stories. So here are some stories I tell myself, in no particular order:&lt;/p&gt;</description>
       
     </item>
     
