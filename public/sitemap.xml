@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://monopolis973.github.io/</loc>
     <lastmod>2025-10-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://monopolis973.github.io/posts/</loc>
     <lastmod>2025-10-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/the-beginning/</loc>
+    <loc>https://monopolis973.github.io/posts/the-beginning/</loc>
     <lastmod>2025-10-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/poems/church/</loc>
+    <loc>https://monopolis973.github.io/poems/church/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/poems/</loc>
+    <loc>https://monopolis973.github.io/poems/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/poems/sand-dollar/</loc>
+    <loc>https://monopolis973.github.io/poems/sand-dollar/</loc>
     <lastmod>2024-03-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://monopolis973.github.io/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/pages/me/</loc>
+    <loc>https://monopolis973.github.io/pages/me/</loc>
   </url><url>
-    <loc>http://localhost:1313/pages/</loc>
+    <loc>https://monopolis973.github.io/pages/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://monopolis973.github.io/tags/</loc>
   </url>
 </urlset>
