@@ -47,6 +47,12 @@ theme = "hugo-blog-awesome"
 		endLevel = 4 # ToC ends at H4
 		ordered = false # generates <ul> instead of <ol>
 
+# idk what this is or why??? but https://gohugo.io/host-and-deploy/host-on-github-pages/ told me to do it
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
+#
+
 ############################## English language ################################
 [Languages.en-gb]
   languageName = "English"
