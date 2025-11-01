@@ -2,30 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://monopolis973.github.io/</loc>
+    <loc>http://localhost:1313/drafts/</loc>
+    <lastmod>2025-10-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2025-10-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/drafts/rushing-rudin/</loc>
+    <lastmod>2025-10-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/drafts/wanting-and-college/</loc>
+    <lastmod>2025-10-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
     <lastmod>2025-10-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://monopolis973.github.io/posts/</loc>
+    <loc>http://localhost:1313/posts/the-beginning/</loc>
     <lastmod>2025-10-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://monopolis973.github.io/posts/the-beginning/</loc>
-    <lastmod>2025-10-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://monopolis973.github.io/poems/church/</loc>
+    <loc>http://localhost:1313/poems/church/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://monopolis973.github.io/poems/</loc>
+    <loc>http://localhost:1313/poems/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://monopolis973.github.io/poems/sand-dollar/</loc>
+    <loc>http://localhost:1313/poems/sand-dollar/</loc>
     <lastmod>2024-03-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://monopolis973.github.io/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>https://monopolis973.github.io/pages/me/</loc>
+    <loc>http://localhost:1313/drafts/family/</loc>
   </url><url>
-    <loc>https://monopolis973.github.io/pages/</loc>
+    <loc>http://localhost:1313/pages/me/</loc>
   </url><url>
-    <loc>https://monopolis973.github.io/tags/</loc>
+    <loc>http://localhost:1313/pages/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
   </url>
 </urlset>

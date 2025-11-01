@@ -2,24 +2,58 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Home on Spencer</title>
-    <link>https://monopolis973.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content in Home on Spencer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Thu, 16 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://monopolis973.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rushing Rudin</title>
+      <link>http://localhost:1313/drafts/rushing-rudin/</link>
+      <pubDate>Fri, 17 Oct 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/drafts/rushing-rudin/</guid>
+      
+      <description>&lt;p&gt;On October 17, 2025, I decided to see how long it would take me to read and do all the problems in Rudin&amp;rsquo;s Principles of Mathematical Analysis, as an expirement to see how &amp;ldquo;productive&amp;rdquo; I can actually be. This is how it went.&lt;/p&gt;
+&lt;p&gt;So, I failed the challenge. I didn&amp;rsquo;t even get through 1 chapter. That&amp;rsquo;s atrocious.&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Wanting, and College</title>
+      <link>http://localhost:1313/drafts/wanting-and-college/</link>
+      <pubDate>Fri, 17 Oct 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/drafts/wanting-and-college/</guid>
+      
+      <description>&lt;p&gt;I have one and only one goal for this quarter: learn how to learn, how to grow, how to change, how to be wrong.
+Steps I&amp;rsquo;m going to take to achieve this goal:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;attempt self study, skipping lectures in 111 and 118 iff I can read on my own. Then I can go at my own pace, and I will do all of the problems and any thing that catches my attention as I work through them.&lt;/li&gt;
+&lt;li&gt;actively try to fail at things. Hopefully this will create quick feedback cycles and I will be able to learn quickly from this. Also is an attempt to get past the wall that I feel I put up whenever somebody is talking one on one to me and explaining something, because I feel like I should be smart enough to just get it so I often hold my comments in when I don&amp;rsquo;t understand, which is bad, and hopefully this will change that.&lt;/li&gt;
+&lt;li&gt;make things. This will necessitate failure, and learning on my own terms.&lt;/li&gt;
+&lt;li&gt;be very concientious of the value of social interactions. Do I actually want them? are they good for my goals? Perhaps try &amp;ldquo;do not talk to anyone until after 6 pm, or after 8 hours of work, or something like that.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;talk to people who are smarter than me. do not be afraid of professers! they will probably like me.&lt;/li&gt;
+&lt;li&gt;ask for things I think I shouldn&amp;rsquo;t get. This will hopefully get me used to rejection, and teach me that I can ask for a lot more than I thought I could.&lt;/li&gt;
+&lt;li&gt;be as blunt as possible. ask about things if you are not certain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;ldquo;free&amp;rdquo; time? art? those are important, probably. invest in community (sandscape), invest in art, invest in thought and expiremtnation and understanding.&lt;/p&gt;</description>
+      
+    </item>
+    
     <item>
       <title>The Beginning</title>
-      <link>https://monopolis973.github.io/posts/the-beginning/</link>
+      <link>http://localhost:1313/posts/the-beginning/</link>
       <pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://monopolis973.github.io/posts/the-beginning/</guid>
+      <guid>http://localhost:1313/posts/the-beginning/</guid>
       
       <description>&lt;!-- I am an island; you probably are as well.\
 I have never really used social media, as I was brought up with people always telling me how terrible and harmful it is. This is true, to an extent.  --&gt;
 &lt;p&gt;Why did I make this website?&lt;br&gt;
 Because many of the people I really respect and look up to have personal websites.
 And as I think about social media, and what I want out of the internet, I realize more and more that consumer-based corperations handling personal media (instagram, facebook, etc.) is not what I desire.
-I quite like the personal website formula: a reflection of self and thoughts in a very self-realized and conscientious manner, not adjusted to fit some corporation&amp;rsquo;s idea of how online communication should work.&lt;br&gt;
+I quite like the personal website formula: a reflection of self and thoughts in a very self-realized and conscientious manner, not adjusted to fit some corporation&amp;rsquo;s idea of how online communication should and shouldn&amp;rsquo;t work.&lt;br&gt;
 This is my website.&lt;br&gt;
 My space.&lt;br&gt;
 I am God here.&lt;br&gt;
@@ -29,10 +63,10 @@ Thank you for visiting.&lt;/p&gt;</description>
     
     <item>
       <title>Church</title>
-      <link>https://monopolis973.github.io/poems/church/</link>
+      <link>http://localhost:1313/poems/church/</link>
       <pubDate>Fri, 03 May 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://monopolis973.github.io/poems/church/</guid>
+      <guid>http://localhost:1313/poems/church/</guid>
       
       <description>&lt;p&gt;My socks are chalk white.&lt;br&gt;
 Mom yells at me, they stand out.&lt;br&gt;
@@ -42,10 +76,10 @@ Wear coal black instead.&lt;/p&gt;</description>
     
     <item>
       <title>Sand Dollar</title>
-      <link>https://monopolis973.github.io/poems/sand-dollar/</link>
+      <link>http://localhost:1313/poems/sand-dollar/</link>
       <pubDate>Wed, 13 Mar 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://monopolis973.github.io/poems/sand-dollar/</guid>
+      <guid>http://localhost:1313/poems/sand-dollar/</guid>
       
       <description>&lt;p&gt;You reach down to pick it up&lt;br&gt;
 From underneath the waves, but&lt;br&gt;
@@ -61,11 +95,22 @@ To reach it.&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>Me</title>
-      <link>https://monopolis973.github.io/pages/me/</link>
+      <title>Family</title>
+      <link>http://localhost:1313/drafts/family/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://monopolis973.github.io/pages/me/</guid>
+      <guid>http://localhost:1313/drafts/family/</guid>
+      
+      <description>&lt;p&gt;When I first got to college, I felt like I missed my friends more than my family, and that was a very strange feeling.&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Me</title>
+      <link>http://localhost:1313/pages/me/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/pages/me/</guid>
       
       <description>&lt;!-- I&#39;m Spencer Hill, although that doesn&#39;t tell you much. I will introduce myself in a moment, but first we should have a quick discussion about the internet, growth, and identity, or none of what follows will seem reasonable at all.
 

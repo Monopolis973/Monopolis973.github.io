@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Drafts on Spencer</title>
+    <link>http://localhost:1313/drafts/</link>
+    <description>Recent content in Drafts on Spencer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Fri, 17 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/drafts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rushing Rudin</title>
+      <link>http://localhost:1313/drafts/rushing-rudin/</link>
+      <pubDate>Fri, 17 Oct 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/drafts/rushing-rudin/</guid>
+      
+      <description>&lt;p&gt;On October 17, 2025, I decided to see how long it would take me to read and do all the problems in Rudin&amp;rsquo;s Principles of Mathematical Analysis, as an expirement to see how &amp;ldquo;productive&amp;rdquo; I can actually be. This is how it went.&lt;/p&gt;
+&lt;p&gt;So, I failed the challenge. I didn&amp;rsquo;t even get through 1 chapter. That&amp;rsquo;s atrocious.&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>
