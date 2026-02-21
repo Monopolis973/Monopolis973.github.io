@@ -22,8 +22,13 @@
   --radius:      6px;
 }
 
-html, body {
+html {
   min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  position: relative; /* so absolute canvases span full document height */
   background: var(--board);
   color: var(--chalk-white);
   font-family: var(--serif);
@@ -34,13 +39,11 @@ html, body {
 
 /* ── Chalkboard canvas (background) ──────────────────────── */
 #chalk-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  position: absolute; /* scrolls with page, not fixed to viewport */
+  top: 0;
+  left: 0;
   z-index: 0;
   display: block;
-  /* canvas is normally non-interactive; drawing-mode changes this */
   pointer-events: none;
   touch-action: none;
 }
@@ -65,7 +68,11 @@ body::before {
 /* ── Draw mode ───────────────────────────────────────────── */
 body.drawing-mode #chalk-canvas { pointer-events: all; cursor: crosshair; }
 body.drawing-mode .site-content { pointer-events: none; user-select: none; }
-body.drawing-mode-eraser #chalk-canvas { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="12" rx="2" fill="%23e8d8c0" stroke="%23888" stroke-width="1.5"/><rect x="2" y="8" width="8" height="12" rx="2" fill="%23c8a8a0"/></svg>') 12 16, cell; }
+body.drawing-mode-eraser #chalk-canvas {
+  pointer-events: all; /* eraser also needs canvas to be clickable */
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="12" rx="2" fill="%23e8d8c0" stroke="%23888" stroke-width="1.5"/><rect x="2" y="8" width="8" height="12" rx="2" fill="%23c8a8a0"/></svg>') 12 16, cell;
+}
+body.drawing-mode-eraser .site-content { pointer-events: none; user-select: none; }
 
 /* ── Page wrapper ────────────────────────────────────────── */
 .site-content {
@@ -570,10 +577,9 @@ a { color: var(--chalk-white); }
 
 /* ── Chalk dust particles ────────────────────────────────── */
 #dust-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  position: absolute; /* scrolls with page */
+  top: 0;
+  left: 0;
   z-index: 5;
   pointer-events: none;
 }

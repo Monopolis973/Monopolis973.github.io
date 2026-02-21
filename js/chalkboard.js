@@ -26,14 +26,24 @@ document.addEventListener("DOMContentLoaded", function () {
   let rafId        = null;
 
   // ── Resize ──────────────────────────────────────────────
+  // Canvas must cover the FULL document, not just the viewport,
+  // so that drawings stay anchored to page content when scrolling.
+  function docSize() {
+    return {
+      w: Math.max(document.body.scrollWidth,  document.documentElement.scrollWidth,  window.innerWidth),
+      h: Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, window.innerHeight),
+    };
+  }
+
   function resize() {
-    // Save current drawing
+    const { w, h } = docSize();
+    // Save current drawing before resize wipes the pixel data
     const img = canvas.toDataURL();
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    dustCanvas.width  = window.innerWidth;
-    dustCanvas.height = window.innerHeight;
-    // Restore drawing after resize
+    canvas.width      = w;
+    canvas.height     = h;
+    dustCanvas.width  = w;
+    dustCanvas.height = h;
+    // Restore drawing
     const i = new Image();
     i.onload = () => ctx.drawImage(i, 0, 0);
     i.src = img;
@@ -41,6 +51,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.addEventListener("resize", resize);
   resize();
+
+  // When dynamically-loaded content (posts, poems) makes the page taller,
+  // grow the canvas to match so you can draw all the way to the bottom.
+  const _ro = new ResizeObserver(() => {
+    const { w, h } = docSize();
+    if (w !== canvas.width || h !== canvas.height) resize();
+  });
+  _ro.observe(document.body);
 
   // ── Chalk drawing helpers ────────────────────────────────
   function hexToRgb(hex) {
@@ -141,14 +159,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ── Pointer events ───────────────────────────────────────
   function getPos(e) {
-    const rect = canvas.getBoundingClientRect();
+    // The canvas is position:absolute (document-relative), so we must add
+    // scroll offsets to convert viewport-relative mouse coords into
+    // document-relative coords that stay anchored to the page content.
+    const sx = window.scrollX;
+    const sy = window.scrollY;
     if (e.touches) {
       return {
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top,
+        x: e.touches[0].clientX + sx,
+        y: e.touches[0].clientY + sy,
       };
     }
-    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    return { x: e.clientX + sx, y: e.clientY + sy };
   }
 
   canvas.addEventListener("pointerdown", (e) => {
