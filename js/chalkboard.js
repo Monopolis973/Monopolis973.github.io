@@ -2,6 +2,7 @@
    chalkboard.js  —  canvas drawing engine
    ============================================================ */
 
+document.addEventListener("DOMContentLoaded", function () {
 (function () {
   "use strict";
 
@@ -317,3 +318,4 @@
   window._saveCanvas   = saveCanvas;
 
 })();
+}); // end DOMContentLoaded
