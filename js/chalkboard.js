@@ -11,9 +11,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const ctx    = canvas.getContext("2d");
 
   // ── State ───────────────────────────────────────────────
+  let tool        = "chalk";   // "chalk" | "eraser"
   let color       = "#f0ece0";
   let brushSize   = 3;
   let isDrawing   = false;
+  let isHolding   = false;     // eraser: mouse held past threshold
+  let holdTimer   = null;
   let lastX       = 0;
   let lastY       = 0;
   let drawingMode = false;
@@ -81,6 +84,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // ── Eraser ───────────────────────────────────────────────
+  function erase(x, y) {
+    const r = (brushSize + 6) * 2.5;
+    ctx.save();
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(0,0,0,1)";
+    ctx.fill();
+    ctx.restore();
+  }
+
   // ── Position helpers ─────────────────────────────────────
   // Canvas is position:absolute — add scroll offsets to get document coords.
   function getDocPos(e) {
@@ -94,29 +109,48 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!drawingMode) return;
     const {x, y} = getDocPos(e);
     lastX = x; lastY = y;
-    isDrawing = true;
-    drawChalkSegment(x, y, x, y);
-    saveCanvas();
     // Close the options panel as soon as drawing starts
     panel.classList.remove("visible");
+    if (tool === "eraser") {
+      holdTimer = setTimeout(() => {
+        isHolding = true;
+        erase(x, y);
+      }, 160);
+    } else {
+      isDrawing = true;
+      drawChalkSegment(x, y, x, y);
+      saveCanvas();
+    }
     canvas.setPointerCapture(e.pointerId);
     e.preventDefault();
   });
 
   canvas.addEventListener("pointermove", (e) => {
-    if (!drawingMode || !isDrawing) return;
+    if (!drawingMode) return;
     const {x, y} = getDocPos(e);
-    drawChalkSegment(x, y, lastX, lastY);
+    if (tool === "eraser" && isHolding) {
+      erase(x, y);
+      saveCanvas();
+    } else if (tool === "chalk" && isDrawing) {
+      drawChalkSegment(x, y, lastX, lastY);
+    }
     lastX = x; lastY = y;
     e.preventDefault();
   });
 
   canvas.addEventListener("pointerup", () => {
+    if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
+    if (isHolding) saveCanvas();
     if (isDrawing) saveCanvas();
     isDrawing = false;
+    isHolding = false;
   });
 
-  canvas.addEventListener("pointercancel", () => { isDrawing = false; });
+  canvas.addEventListener("pointercancel", () => {
+    if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
+    isDrawing = false;
+    isHolding = false;
+  });
 
   // ── LocalStorage ─────────────────────────────────────────
   const STORAGE_KEY = "chalkCanvas_" + window.location.pathname;
@@ -146,6 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const toggleLabel = toggleBtn.querySelector(".toggle-label");
   const panel       = document.getElementById("draw-panel");
   const stopBtn     = document.getElementById("stop-draw-btn");
+  const eraserBtn   = document.getElementById("eraser-btn");
   const clearBtn    = document.getElementById("clear-btn");
   const brushInput  = document.getElementById("brush-size");
   const swatches    = document.querySelectorAll(".swatch");
@@ -156,24 +191,32 @@ document.addEventListener("DOMContentLoaded", function () {
       toggleLabel.textContent = "draw on board";
       return;
     }
-    toggleIcon.innerHTML    = `<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:${color};border:1.5px solid rgba(255,255,255,0.35);vertical-align:middle;margin-bottom:1px"></span>`;
-    toggleLabel.textContent = ` · ${brushSize}`;
+    if (tool === "eraser") {
+      toggleIcon.textContent  = "🧹";
+      toggleLabel.textContent = ` eraser · ${brushSize}`;
+    } else {
+      toggleIcon.innerHTML    = `<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:${color};border:1.5px solid rgba(255,255,255,0.35);vertical-align:middle;margin-bottom:1px"></span>`;
+      toggleLabel.textContent = ` · ${brushSize}`;
+    }
   }
 
   function startDrawing() {
     drawingMode = true;
     panel.classList.add("visible");
     toggleBtn.classList.add("active");
-    document.body.classList.add("drawing-mode");
+    document.body.classList.toggle("drawing-mode",        tool !== "eraser");
+    document.body.classList.toggle("drawing-mode-eraser", tool === "eraser");
     updateToggleBtn();
   }
 
   function stopDrawing() {
     drawingMode = false;
     isDrawing   = false;
+    isHolding   = false;
+    if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
     panel.classList.remove("visible");
     toggleBtn.classList.remove("active");
-    document.body.classList.remove("drawing-mode");
+    document.body.classList.remove("drawing-mode", "drawing-mode-eraser");
     updateToggleBtn();
   }
 
@@ -187,11 +230,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   stopBtn.addEventListener("click", stopDrawing);
 
+  eraserBtn.addEventListener("click", () => {
+    tool = "eraser";
+    eraserBtn.classList.add("selected");
+    swatches.forEach(s => s.classList.remove("selected"));
+    document.body.classList.remove("drawing-mode");
+    if (drawingMode) document.body.classList.add("drawing-mode-eraser");
+    updateToggleBtn();
+  });
+
   swatches.forEach(sw => {
     sw.addEventListener("click", () => {
       color = sw.dataset.color;
+      tool  = "chalk";
       sw.classList.add("selected");
       swatches.forEach(s => { if (s !== sw) s.classList.remove("selected"); });
+      eraserBtn.classList.remove("selected");
+      document.body.classList.remove("drawing-mode-eraser");
+      if (drawingMode) document.body.classList.add("drawing-mode");
       updateToggleBtn();
     });
   });
