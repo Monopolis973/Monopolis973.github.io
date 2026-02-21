@@ -69,8 +69,8 @@ body::before {
 body.drawing-mode #chalk-canvas { pointer-events: all; cursor: crosshair; }
 body.drawing-mode .site-content { pointer-events: none; user-select: none; }
 body.drawing-mode-eraser #chalk-canvas {
-  pointer-events: all; /* eraser also needs canvas to be clickable */
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="12" rx="2" fill="%23e8d8c0" stroke="%23888" stroke-width="1.5"/><rect x="2" y="8" width="8" height="12" rx="2" fill="%23c8a8a0"/></svg>') 12 16, cell;
+  pointer-events: all;
+  cursor: var(--eraser-cursor, cell);
 }
 body.drawing-mode-eraser .site-content { pointer-events: none; user-select: none; }
 
@@ -489,20 +489,13 @@ a { color: var(--chalk-white); }
   min-width: 190px;
 }
 
-#draw-panel.visible { display: flex; }
+#draw-panel.visible { display: flex; animation: panel-in 0.18s ease; }
 
-/* Minimizes to just a thin strip while the user is actively drawing */
-#draw-panel.minimized {
-  opacity: 0;
-  transform: translateY(6px) scale(0.97);
-  pointer-events: none;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
 }
-#draw-panel.visible:not(.minimized) {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
+
 
 .panel-label {
   font-family: var(--hand);
@@ -586,6 +579,25 @@ a { color: var(--chalk-white); }
 #clear-btn:hover {
   border-color: var(--accent-red);
   background: rgba(212, 96, 96, 0.08);
+}
+
+#stop-draw-btn {
+  font-family: var(--hand);
+  font-size: 0.95rem;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid var(--chalk-faint);
+  color: var(--chalk-dim);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 0.3rem;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+#stop-draw-btn:hover {
+  border-color: var(--chalk-white);
+  color: var(--chalk-white);
+  background: rgba(255,255,255,0.08);
 }
 
 /* ── Chalk dust particles ────────────────────────────────── */

@@ -13,86 +13,79 @@ document.addEventListener("DOMContentLoaded", function () {
   const dctx       = dustCanvas.getContext("2d");
 
   // ── State ───────────────────────────────────────────────
-  let tool         = "chalk";          // "chalk" | "eraser"
-  let color        = "#f0ece0";
-  let brushSize    = 3;
-  let isDrawing    = false;
-  let isHolding    = false;            // eraser hold-to-erase
-  let holdTimer    = null;
-  let lastX        = 0;
-  let lastY        = 0;
-  let drawingMode  = false;
+  let tool          = "chalk";   // "chalk" | "eraser"
+  let color         = "#f0ece0";
+  let brushSize     = 3;
+  let isDrawing     = false;
+  let isHolding     = false;
+  let holdTimer     = null;
+  let lastX         = 0;
+  let lastY         = 0;
+  let drawingMode   = false;
   let dustParticles = [];
-  let rafId        = null;
+  let rafId         = null;
 
   // ── Resize ──────────────────────────────────────────────
-  // Canvas must cover the FULL document, not just the viewport,
-  // so that drawings stay anchored to page content when scrolling.
+  // chalk canvas  = full document size (marks scroll with the page)
+  // dust canvas   = viewport size only (dust is a fixed visual effect)
   function docSize() {
     return {
-      w: Math.max(document.body.scrollWidth,  document.documentElement.scrollWidth,  window.innerWidth),
+      w: Math.max(document.body.scrollWidth, document.documentElement.scrollWidth, window.innerWidth),
       h: Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, window.innerHeight),
     };
   }
 
-  function resize() {
+  function resizeChalk() {
     const { w, h } = docSize();
-    // Save current drawing before resize wipes the pixel data
     const img = canvas.toDataURL();
-    canvas.width      = w;
-    canvas.height     = h;
-    dustCanvas.width  = w;
-    dustCanvas.height = h;
-    // Restore drawing
+    canvas.width  = w;
+    canvas.height = h;
     const i = new Image();
     i.onload = () => ctx.drawImage(i, 0, 0);
     i.src = img;
   }
 
-  window.addEventListener("resize", resize);
-  resize();
+  function resizeDust() {
+    // Dust canvas is position:fixed — it only needs viewport dimensions.
+    // If set to document size, the canvas coordinate space gets scaled down
+    // to fit the viewport, making particle coords appear in the wrong place.
+    dustCanvas.width  = window.innerWidth;
+    dustCanvas.height = window.innerHeight;
+  }
 
-  // When dynamically-loaded content (posts, poems) makes the page taller,
-  // grow the canvas to match so you can draw all the way to the bottom.
+  window.addEventListener("resize", () => { resizeChalk(); resizeDust(); });
+  resizeChalk();
+  resizeDust();
+
   const _ro = new ResizeObserver(() => {
     const { w, h } = docSize();
-    if (w !== canvas.width || h !== canvas.height) resize();
+    if (w !== canvas.width || h !== canvas.height) resizeChalk();
   });
   _ro.observe(document.body);
 
-  // ── Chalk drawing helpers ────────────────────────────────
+  // ── Chalk drawing ────────────────────────────────────────
   function hexToRgb(hex) {
-    const r = parseInt(hex.slice(1,3),16);
-    const g = parseInt(hex.slice(3,5),16);
-    const b = parseInt(hex.slice(5,7),16);
-    return {r,g,b};
+    return {
+      r: parseInt(hex.slice(1,3), 16),
+      g: parseInt(hex.slice(3,5), 16),
+      b: parseInt(hex.slice(5,7), 16),
+    };
   }
 
-  /**
-   * Draw a chalk-textured line segment from (px,py) to (x,y).
-   * Uses multiple semi-transparent strokes with random offsets
-   * to mimic real chalk.
-   */
   function drawChalkSegment(x, y, px, py) {
     const dist  = Math.hypot(x - px, y - py);
     const steps = Math.max(1, Math.floor(dist / 1.5));
     const {r,g,b} = hexToRgb(color);
-
-    ctx.lineCap   = "round";
-    ctx.lineJoin  = "round";
-
+    ctx.lineCap  = "round";
+    ctx.lineJoin = "round";
     for (let s = 0; s <= steps; s++) {
       const t  = s / steps;
       const cx = px + (x - px) * t;
       const cy = py + (y - py) * t;
-
-      // Main stroke
       ctx.beginPath();
       ctx.arc(cx, cy, brushSize * 0.5, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${r},${g},${b},${0.55 + Math.random() * 0.3})`;
       ctx.fill();
-
-      // Texture grain — smaller scattered dots
       for (let j = 0; j < 3; j++) {
         const ox = (Math.random() - 0.5) * brushSize * 1.4;
         const oy = (Math.random() - 0.5) * brushSize * 1.4;
@@ -116,21 +109,21 @@ document.addEventListener("DOMContentLoaded", function () {
     ctx.restore();
   }
 
-  // ── Chalk dust particles ─────────────────────────────────
-  // x, y here are always VIEWPORT coords (not document coords),
-  // because dust is a purely visual effect that lives in the air —
-  // it doesn't need to be anchored to the page like chalk marks do.
-  // The dust canvas is position:fixed so viewport coords map directly.
+  // ── Chalk dust ───────────────────────────────────────────
+  // vx/vy MUST be viewport coords (clientX/clientY).
+  // Dust canvas is position:fixed, viewport-sized. Its coordinate space
+  // maps 1:1 to viewport pixels. Using document coords would place particles
+  // far outside the visible area.
   function spawnDust(vx, vy, count) {
-    count = count || (28 + Math.floor(Math.random() * 18));
+    if (count === undefined) count = 28 + Math.floor(Math.random() * 18);
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
       const speed = 0.6 + Math.random() * 2.8;
       const grey  = Math.floor(190 + Math.random() * 60);
       dustParticles.push({
         x: vx, y: vy,
-        vx:   Math.cos(angle) * speed,
-        vy:   Math.sin(angle) * speed - 1.2,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 1.2,
         life: 1,
         fade: 0.018 + Math.random() * 0.025,
         size: 1.5 + Math.random() * 3.5,
@@ -144,10 +137,10 @@ document.addEventListener("DOMContentLoaded", function () {
     dctx.clearRect(0, 0, dustCanvas.width, dustCanvas.height);
     dustParticles = dustParticles.filter(p => p.life > 0);
     for (const p of dustParticles) {
-      p.x   += p.vx;
-      p.y   += p.vy;
-      p.vy  += 0.06;        // gravity
-      p.vx  *= 0.97;        // drag
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.vy += 0.06;
+      p.vx *= 0.97;
       p.life -= p.fade;
       dctx.beginPath();
       dctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
@@ -161,38 +154,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // ── Pointer events ───────────────────────────────────────
-  // Document coords — used for chalk drawing (canvas is position:absolute)
-  function getPos(e) {
-    const sx = window.scrollX;
-    const sy = window.scrollY;
-    if (e.touches) {
-      return {
-        x: e.touches[0].clientX + sx,
-        y: e.touches[0].clientY + sy,
-      };
-    }
+  // ── Position helpers ─────────────────────────────────────
+  function getDocPos(e) {
+    const sx = window.scrollX, sy = window.scrollY;
+    if (e.touches) return { x: e.touches[0].clientX + sx, y: e.touches[0].clientY + sy };
     return { x: e.clientX + sx, y: e.clientY + sy };
   }
 
-  // Viewport coords — used for dust (dust canvas is position:fixed)
   function getViewportPos(e) {
     if (e.touches) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
     return { x: e.clientX, y: e.clientY };
   }
 
+  // ── Pointer events ───────────────────────────────────────
   canvas.addEventListener("pointerdown", (e) => {
     if (!drawingMode) return;
-    const {x, y}    = getPos(e);
+    const {x, y}         = getDocPos(e);
     const {x: vx, y: vy} = getViewportPos(e);
     lastX = x; lastY = y;
 
-    // Collapse the options panel while drawing so it's out of the way
-    panel.classList.add("minimized");
-
     if (tool === "eraser") {
-      // Initial click = big dust burst; hold = erase + trickle dust
-      spawnDust(vx, vy);  // full burst (default count ~30–45)
+      spawnDust(vx, vy);          // big burst on initial press
       holdTimer = setTimeout(() => {
         isHolding = true;
         erase(x, y);
@@ -209,12 +191,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   canvas.addEventListener("pointermove", (e) => {
     if (!drawingMode) return;
-    const {x, y}         = getPos(e);
+    const {x, y}         = getDocPos(e);
     const {x: vx, y: vy} = getViewportPos(e);
 
     if (tool === "eraser" && isHolding) {
       erase(x, y);
-      // Trickle a small amount of dust as the eraser moves — about 1/8 of the burst
       if (Math.random() < 0.6) spawnDust(vx, vy, 3 + Math.floor(Math.random() * 4));
       saveCanvas();
     } else if (tool === "chalk" && isDrawing) {
@@ -226,27 +207,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   canvas.addEventListener("pointerup", () => {
     if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
-    if (isHolding) { saveCanvas(); }
+    if (isHolding) saveCanvas();
     isDrawing = false;
     isHolding = false;
-    // Restore the panel once the stroke is done
-    panel.classList.remove("minimized");
   });
 
   canvas.addEventListener("pointercancel", () => {
     if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
     isDrawing = false;
     isHolding = false;
-    panel.classList.remove("minimized");
   });
 
-  // ── LocalStorage persistence ─────────────────────────────
+  // ── LocalStorage ─────────────────────────────────────────
   const STORAGE_KEY = "chalkCanvas_" + window.location.pathname;
 
   function saveCanvas() {
-    try {
-      localStorage.setItem(STORAGE_KEY, canvas.toDataURL());
-    } catch(e) { /* quota exceeded — silently ignore */ }
+    try { localStorage.setItem(STORAGE_KEY, canvas.toDataURL()); }
+    catch(e) { /* quota exceeded */ }
   }
 
   function loadCanvas() {
@@ -258,44 +235,77 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // ── Initial markings API ─────────────────────────────────
-  /**
-   * Called by individual pages to draw custom initial chalk art.
-   * Only drawn if there is NO saved state for this page,
-   * so user edits won't get overwritten on reload.
-   */
   window.drawInitialMarkings = function(drawFn) {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) {
-      // Wait for canvas to be sized, then draw
-      setTimeout(() => drawFn(ctx, canvas), 120);
-    }
+    if (!saved) setTimeout(() => drawFn(ctx, canvas), 120);
   };
 
-  // ── Toolbar wiring ────────────────────────────────────────
-  const toggleBtn  = document.getElementById("draw-toggle-btn");
-  const panel      = document.getElementById("draw-panel");
-  const eraserBtn  = document.getElementById("eraser-btn");
-  const clearBtn   = document.getElementById("clear-btn");
-  const brushInput = document.getElementById("brush-size");
-  const swatches   = document.querySelectorAll(".swatch");
+  // ── Toolbar ───────────────────────────────────────────────
+  const toggleBtn   = document.getElementById("draw-toggle-btn");
+  const toggleIcon  = document.getElementById("draw-toggle-icon");
+  const toggleLabel = toggleBtn.querySelector(".toggle-label");
+  const panel       = document.getElementById("draw-panel");
+  const stopBtn     = document.getElementById("stop-draw-btn");
+  const eraserBtn   = document.getElementById("eraser-btn");
+  const clearBtn    = document.getElementById("clear-btn");
+  const brushInput  = document.getElementById("brush-size");
+  const swatches    = document.querySelectorAll(".swatch");
 
+  // Chalkboard (felt) eraser cursor — wide rectangle, green felt bottom
+  const ERASER_SVG = `<svg xmlns='http://www.w3.org/2000/svg' width='44' height='26' viewBox='0 0 44 26'><rect x='1' y='1' width='42' height='17' rx='2' fill='%23c8a87a' stroke='%238b6940' stroke-width='1.5'/><rect x='1' y='14' width='42' height='11' rx='1' fill='%235a7a5a' stroke='%233d5c3d' stroke-width='1.5'/><rect x='4' y='21' width='36' height='3' rx='1' fill='rgba(240%2C236%2C224%2C0.45)'/></svg>`;
+  const ERASER_CURSOR = `url("data:image/svg+xml;utf8,${ERASER_SVG}") 22 25, cell`;
+
+  // Update the options button to show current tool state
+  function updateToggleBtn() {
+    if (!drawingMode) {
+      toggleIcon.textContent  = "✏️";
+      toggleLabel.textContent = "draw on board";
+      return;
+    }
+    if (tool === "eraser") {
+      toggleIcon.innerHTML = `<svg width="18" height="11" viewBox="0 0 44 26" style="vertical-align:middle"><rect x="1" y="1" width="42" height="17" rx="2" fill="%23c8a87a" stroke="%238b6940" stroke-width="2"/><rect x="1" y="14" width="42" height="11" rx="1" fill="%235a7a5a"/></svg>`;
+      toggleLabel.textContent = ` eraser · ${brushSize}`;
+    } else {
+      toggleIcon.innerHTML    = `<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:${color};border:1.5px solid rgba(255,255,255,0.35);vertical-align:middle;margin-bottom:1px"></span>`;
+      toggleLabel.textContent = ` · ${brushSize}`;
+    }
+  }
+
+  function startDrawing() {
+    drawingMode = true;
+    panel.classList.add("visible");
+    toggleBtn.classList.add("active");
+    document.body.classList.toggle("drawing-mode",        tool !== "eraser");
+    document.body.classList.toggle("drawing-mode-eraser", tool === "eraser");
+    updateToggleBtn();
+  }
+
+  function stopDrawing() {
+    drawingMode = false;
+    panel.classList.remove("visible");
+    toggleBtn.classList.remove("active");
+    document.body.classList.remove("drawing-mode", "drawing-mode-eraser");
+    updateToggleBtn();
+  }
+
+  // Main button: start drawing (if off) OR toggle panel visibility (if on)
   toggleBtn.addEventListener("click", () => {
-    drawingMode = !drawingMode;
-    toggleBtn.classList.toggle("active", drawingMode);
-    panel.classList.toggle("visible", drawingMode);
-    document.body.classList.toggle("drawing-mode", drawingMode && tool !== "eraser");
-    document.body.classList.toggle("drawing-mode-eraser", drawingMode && tool === "eraser");
-    toggleBtn.querySelector(".toggle-label").textContent =
-      drawingMode ? "stop drawing" : "draw on board";
+    if (!drawingMode) {
+      startDrawing();
+    } else {
+      panel.classList.toggle("visible");
+    }
   });
+
+  stopBtn.addEventListener("click", stopDrawing);
 
   eraserBtn.addEventListener("click", () => {
     tool = "eraser";
     eraserBtn.classList.add("selected");
     swatches.forEach(s => s.classList.remove("selected"));
     document.body.classList.remove("drawing-mode");
-    document.body.classList.add("drawing-mode-eraser");
+    if (drawingMode) document.body.classList.add("drawing-mode-eraser");
+    updateToggleBtn();
   });
 
   swatches.forEach(sw => {
@@ -306,56 +316,42 @@ document.addEventListener("DOMContentLoaded", function () {
       eraserBtn.classList.remove("selected");
       document.body.classList.remove("drawing-mode-eraser");
       if (drawingMode) document.body.classList.add("drawing-mode");
+      updateToggleBtn();
     });
   });
 
   brushInput.addEventListener("input", () => {
     brushSize = parseInt(brushInput.value);
+    updateToggleBtn();
   });
 
   clearBtn.addEventListener("click", () => {
     if (confirm("Erase all your chalk drawings on this page?")) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       localStorage.removeItem(STORAGE_KEY);
-      // Re-draw initial markings if defined
-      if (window._initialMarkingsFn) {
-        window._initialMarkingsFn(ctx, canvas);
-      }
+      if (window._initialMarkingsFn) window._initialMarkingsFn(ctx, canvas);
     }
   });
 
-  // Keyboard: Escape exits draw mode
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && drawingMode) {
-      drawingMode = false;
-      toggleBtn.classList.remove("active");
-      panel.classList.remove("visible");
-      document.body.classList.remove("drawing-mode", "drawing-mode-eraser");
-      toggleBtn.querySelector(".toggle-label").textContent = "draw on board";
-    }
+    if (e.key === "Escape" && drawingMode) stopDrawing();
   });
+
+  // Apply eraser cursor via CSS custom property so the CSS rule can use it
+  document.documentElement.style.setProperty("--eraser-cursor", ERASER_CURSOR);
 
   // ── Init ─────────────────────────────────────────────────
-  // Select first swatch as default
   if (swatches.length) {
     swatches[0].classList.add("selected");
     color = swatches[0].dataset.color;
   }
 
-  // Load saved canvas (after a tiny delay so canvas is sized)
-  window.addEventListener("load", () => {
-    setTimeout(loadCanvas, 80);
-  });
+  window.addEventListener("load", () => setTimeout(loadCanvas, 80));
+  window.addEventListener("beforeunload", () => { if (ctx) saveCanvas(); });
 
-  // Save on page unload
-  window.addEventListener("beforeunload", () => {
-    if (ctx) saveCanvas();
-  });
-
-  // Expose for external use
-  window._chalkCtx     = ctx;
-  window._chalkCanvas  = canvas;
-  window._saveCanvas   = saveCanvas;
+  window._chalkCtx    = ctx;
+  window._chalkCanvas = canvas;
+  window._saveCanvas  = saveCanvas;
 
 })();
 }); // end DOMContentLoaded

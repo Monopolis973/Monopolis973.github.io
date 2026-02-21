@@ -54,9 +54,10 @@
     </div>
     <button id="eraser-btn">🧹 eraser</button>
     <button id="clear-btn">clear my drawings</button>
+    <button id="stop-draw-btn">✕ stop drawing</button>
   </div>
   <button id="draw-toggle-btn">
-    <span>✏️</span>
+    <span id="draw-toggle-icon">✏️</span>
     <span class="toggle-label">draw on board</span>
   </button>
 </div>`;
