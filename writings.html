@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writings — Spencer Hill</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="config.js"></script>
+  <script src="js/shell.js"></script>
+</head>
+<body>
+
+<div class="site-content">
+  <!-- nav injected by shell.js -->
+  <main>
+    <h1 class="page-title">Writings</h1>
+    <p class="page-subtitle">essays, notes, and things I keep thinking about</p>
+    <hr class="chalk-rule">
+    <div id="post-list-container">
+      <p class="loading">loading posts…</p>
+    </div>
+  </main>
+</div>
+
+<script src="js/posts.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  renderPostList(
+    document.getElementById("post-list-container"),
+    "posts",
+    "post.html"
+  );
+});
+</script>
+
+<script src="js/chalkboard.js"></script>
+<script>
+// ── Custom initial markings for the writings page ─────────
+window.drawInitialMarkings(function(ctx, canvas) {
+  ctx.save();
+
+  // Underline the word "Writings" in the heading area (approximate position)
+  ctx.strokeStyle = "rgba(212,168,75,0.45)";
+  ctx.lineWidth = 3;
+  ctx.lineCap = "round";
+
+  // Wavy underline below title area
+  ctx.beginPath();
+  ctx.moveTo(42, 195);
+  for (let x = 42; x < 320; x += 10) {
+    ctx.lineTo(x, 195 + Math.sin((x - 42) * 0.15) * 3);
+  }
+  ctx.stroke();
+
+  ctx.restore();
+});
+</script>
+</body>
+</html>

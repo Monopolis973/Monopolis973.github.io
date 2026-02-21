@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spencer Hill</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="config.js"></script>
+  <script src="js/shell.js"></script>
+</head>
+<body>
+
+<div class="site-content">
+  <!-- nav injected by shell.js -->
+
+  <div class="home-hero">
+    <h1>Spencer Hill</h1>
+    <p class="tagline">writings, poems, projects, and a few friends.</p>
+  </div>
+
+  <div class="home-sections" id="home-cards">
+    <!-- populated by script below -->
+  </div>
+
+  <div style="max-width:780px;margin:3rem auto 0;padding:0 2rem 4rem;">
+    <hr class="chalk-rule">
+    <p style="color:var(--chalk-dim);font-family:var(--hand);font-size:1.1rem;">
+      This is my little corner of the internet. Pull up a chair.
+    </p>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = [
+    { label: "writings",  href: "writings.html",  desc: "essays, notes, and longer thoughts" },
+    { label: "poetry",    href: "poetry.html",    desc: "poems I've written" },
+    { label: "projects",  href: "projects.html",  desc: "things I've built and made" },
+    { label: "friends",   href: "friends.html",   desc: "people whose work I love" },
+    { label: "about me",  href: "about.html",     desc: "who I am, roughly" },
+  ];
+  const container = document.getElementById("home-cards");
+  for (const c of cards) {
+    container.insertAdjacentHTML("beforeend", `
+      <a class="home-card" href="${c.href}">
+        <span class="card-label">${c.label}</span>
+        <span class="card-desc">${c.desc}</span>
+      </a>
+    `);
+  }
+});
+</script>
+
+<script src="js/chalkboard.js"></script>
+<script>
+// ── Custom initial markings for the home page ────────────
+window.drawInitialMarkings(function(ctx, canvas) {
+  // A few decorative chalk marks on the home page
+  ctx.save();
+
+  // Faint asterism in the top-right corner
+  ctx.strokeStyle = "rgba(240,236,224,0.18)";
+  ctx.lineWidth = 1.5;
+  ctx.lineCap = "round";
+  const stars = [[canvas.width-120, 80],[canvas.width-90, 60],[canvas.width-60, 85],
+                 [canvas.width-100, 110],[canvas.width-75, 95]];
+  for (const [x,y] of stars) {
+    for (let a = 0; a < Math.PI*2; a += Math.PI/3) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + Math.cos(a)*8, y + Math.sin(a)*8);
+      ctx.stroke();
+    }
+  }
+
+  ctx.restore();
+});
+</script>
+</body>
+</html>

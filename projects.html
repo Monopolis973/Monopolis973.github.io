@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Spencer Hill</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="config.js"></script>
+  <script src="js/shell.js"></script>
+</head>
+<body>
+
+<div class="site-content">
+  <!-- nav injected by shell.js -->
+  <main>
+    <h1 class="page-title">Projects &amp; Creations</h1>
+    <p class="page-subtitle">things I've built, written, or made</p>
+    <hr class="chalk-rule">
+    <div class="project-list" id="project-list">
+      <!-- populated by script below from config.js -->
+    </div>
+  </main>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("project-list");
+  const projects  = SITE_CONFIG.projects || [];
+
+  if (!projects.length) {
+    container.innerHTML = `<p style="color:var(--chalk-dim);font-family:var(--hand)">
+      Add projects to the <code>projects</code> array in <code>config.js</code>.
+    </p>`;
+    return;
+  }
+
+  for (const p of projects) {
+    const tags = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join("");
+    container.insertAdjacentHTML("beforeend", `
+      <div class="project-card">
+        <a class="project-title" href="${p.url || '#'}"
+           ${p.url ? 'target="_blank" rel="noopener"' : ''}>${p.title}</a>
+        ${p.desc ? `<p class="project-desc">${p.desc}</p>` : ""}
+        ${tags ? `<div class="project-tags">${tags}</div>` : ""}
+      </div>
+    `);
+  }
+});
+</script>
+
+<script src="js/chalkboard.js"></script>
+<script>
+window.drawInitialMarkings(function(ctx, canvas) {
+  ctx.save();
+
+  // Diagonal hatch marks in the bottom-left corner
+  ctx.strokeStyle = "rgba(240,236,224,0.08)";
+  ctx.lineWidth = 1.2;
+  for (let i = 0; i < 7; i++) {
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height - 30 + i * 12);
+    ctx.lineTo(30 - i * 12, canvas.height);
+    ctx.stroke();
+  }
+
+  ctx.restore();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Friends — Spencer Hill</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="config.js"></script>
+  <script src="js/shell.js"></script>
+</head>
+<body>
+
+<div class="site-content">
+  <!-- nav injected by shell.js -->
+  <main>
+    <h1 class="page-title">Friends</h1>
+    <p class="page-subtitle">people I like, and places you should go</p>
+    <hr class="chalk-rule">
+    <div class="friends-grid" id="friends-grid">
+      <!-- populated from config.js -->
+    </div>
+  </main>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const grid    = document.getElementById("friends-grid");
+  const friends = SITE_CONFIG.friends || [];
+
+  if (!friends.length) {
+    grid.innerHTML = `<p style="color:var(--chalk-dim);font-family:var(--hand)">
+      Add friends to the <code>friends</code> array in <code>config.js</code>.
+    </p>`;
+    return;
+  }
+
+  for (const f of friends) {
+    grid.insertAdjacentHTML("beforeend", `
+      <a class="friend-card" href="${f.url}"
+         target="_blank" rel="noopener noreferrer">
+        <span class="friend-name">${f.name}</span>
+        ${f.note ? `<span class="friend-note">${f.note}</span>` : ""}
+      </a>
+    `);
+  }
+});
+</script>
+
+<script src="js/chalkboard.js"></script>
+<script>
+window.drawInitialMarkings(function(ctx, canvas) {
+  ctx.save();
+
+  // Linked circles in the corner — a little friendship motif
+  function chalkCircle(x, y, r, col) {
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.8;
+    ctx.lineCap = "round";
+    // Draw as a series of short arcs to look hand-drawn
+    for (let a = 0; a < Math.PI * 2; a += 0.25) {
+      const jitter = (Math.random() - 0.5) * 1.5;
+      ctx.beginPath();
+      ctx.arc(x + (Math.random()-0.5)*jitter,
+              y + (Math.random()-0.5)*jitter,
+              r + (Math.random()-0.5)*2, a, a + 0.28);
+      ctx.stroke();
+    }
+  }
+
+  chalkCircle(canvas.width - 90, 65, 24, "rgba(110,168,212,0.28)");
+  chalkCircle(canvas.width - 55, 65, 24, "rgba(160,110,212,0.22)");
+  chalkCircle(canvas.width - 72, 92, 24, "rgba(142,212,164,0.22)");
+
+  ctx.restore();
+});
+</script>
+</body>
+</html>

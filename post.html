@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post — Spencer Hill</title>
+  <link rel="stylesheet" href="css/main.css">
+  <!-- marked.js for full Markdown rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"
+          integrity="sha512-rfX4p3RNnKQBMBXKNRex4jXMBGKsizBCMjAFjQr4RkuB1GU3IqS8pBb4bFLQFLi3iBfPU8Uyg9xXR9FtirgQ=="
+          crossorigin="anonymous"></script>
+  <script src="config.js"></script>
+  <script src="js/shell.js"></script>
+</head>
+<body>
+
+<div class="site-content">
+  <!-- nav injected by shell.js -->
+  <main>
+    <a class="back-link" href="writings.html">← writings</a>
+    <h1 class="page-title" id="post-title"> </h1>
+    <p class="page-subtitle" id="post-meta"></p>
+    <hr class="chalk-rule">
+    <div id="post-body" class="post-body">
+      <p class="loading">loading…</p>
+    </div>
+  </main>
+</div>
+
+<script src="js/posts.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  renderPost("posts", "post-body");
+});
+</script>
+
+<script src="js/chalkboard.js"></script>
+<!--
+  To add custom chalk markings on a specific post, you'd need to add
+  a script block here that checks window.location.search for the post filename.
+  Example:
+
+  <script>
+  window.drawInitialMarkings(function(ctx, canvas) {
+    const file = new URLSearchParams(window.location.search).get("file");
+    if (file === "my-special-post.md") {
+      // draw a red circle around something
+      ctx.strokeStyle = "rgba(212,96,96,0.6)";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.ellipse(250, 310, 60, 18, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  });
+  <\/script>
+-->
+</body>
+</html>

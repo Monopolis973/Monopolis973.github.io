@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poetry — Spencer Hill</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="config.js"></script>
+  <script src="js/shell.js"></script>
+</head>
+<body>
+
+<div class="site-content">
+  <!-- nav injected by shell.js -->
+  <main>
+    <h1 class="page-title">Poetry</h1>
+    <p class="page-subtitle">some poems</p>
+    <hr class="chalk-rule">
+    <div id="poem-list-container">
+      <p class="loading">loading poems…</p>
+    </div>
+  </main>
+</div>
+
+<script src="js/posts.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  renderPostList(
+    document.getElementById("poem-list-container"),
+    "poems",
+    "poem.html"
+  );
+});
+</script>
+
+<script src="js/chalkboard.js"></script>
+<script>
+window.drawInitialMarkings(function(ctx, canvas) {
+  ctx.save();
+
+  // A soft scribbled star near top-right
+  function star(cx, cy, r, col) {
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.8;
+    ctx.lineCap = "round";
+    for (let i = 0; i < 5; i++) {
+      const a1 = (i * 4 * Math.PI / 5) - Math.PI / 2;
+      const a2 = ((i+2) * 4 * Math.PI / 5) - Math.PI / 2;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(a1)*r, cy + Math.sin(a1)*r);
+      ctx.lineTo(cx + Math.cos(a2)*r, cy + Math.sin(a2)*r);
+      ctx.stroke();
+    }
+  }
+
+  star(canvas.width - 80, 70, 22, "rgba(110,168,212,0.35)");
+  star(canvas.width - 50, 105, 12, "rgba(160,110,212,0.25)");
+
+  ctx.restore();
+});
+</script>
+</body>
+</html>

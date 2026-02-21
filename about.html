@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Spencer Hill</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="config.js"></script>
+  <script src="js/shell.js"></script>
+</head>
+<body>
+
+<div class="site-content">
+  <!-- nav injected by shell.js -->
+  <main>
+    <h1 class="page-title">About Me</h1>
+    <hr class="chalk-rule">
+
+    <!--
+      ✏️  EDIT THIS SECTION with your actual bio.
+          Use <p> tags for paragraphs. You can add <h2> subheadings, etc.
+    -->
+    <div class="post-body" style="margin-top:1.5rem;">
+      <p>
+        Hi, I'm Spencer. Write something here about yourself — where you're from,
+        what you study or work on, what you care about.
+      </p>
+      <p>
+        A second paragraph. Maybe where you're based, or how to reach you.
+      </p>
+      <p>
+        You can reach me at
+        <a href="mailto:you@example.com">you@example.com</a>.
+      </p>
+    </div>
+
+  </main>
+</div>
+
+<script src="js/chalkboard.js"></script>
+<script>
+window.drawInitialMarkings(function(ctx, canvas) {
+  ctx.save();
+
+  // Bracket decorating the corner
+  ctx.strokeStyle = "rgba(240,236,224,0.13)";
+  ctx.lineWidth = 2;
+  ctx.lineCap = "round";
+
+  // Top-left bracket
+  ctx.beginPath();
+  ctx.moveTo(18, 40); ctx.lineTo(18, 18); ctx.lineTo(42, 18);
+  ctx.stroke();
+
+  // Bottom-right bracket
+  ctx.beginPath();
+  ctx.moveTo(canvas.width - 18, canvas.height - 40);
+  ctx.lineTo(canvas.width - 18, canvas.height - 18);
+  ctx.lineTo(canvas.width - 42, canvas.height - 18);
+  ctx.stroke();
+
+  ctx.restore();
+});
+</script>
+</body>
+</html>

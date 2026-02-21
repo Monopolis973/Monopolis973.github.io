@@ -1,0 +1,588 @@
+/* ============================================================
+   main.css  —  spencerhill.me  chalkboard theme
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* ── Reset & base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --board:       #1c3a1e;
+  --board-light: #234526;
+  --chalk-white: #f0ece0;
+  --chalk-cream: #e8e0cc;
+  --chalk-dim:   rgba(240,236,224,0.55);
+  --chalk-faint: rgba(240,236,224,0.25);
+  --accent-red:  #d46060;
+  --accent-gold: #d4a84b;
+  --accent-blue: #6ea8d4;
+  --serif:       'Lora', Georgia, serif;
+  --hand:        'Caveat', cursive;
+  --radius:      6px;
+}
+
+html, body {
+  min-height: 100%;
+  background: var(--board);
+  color: var(--chalk-white);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* ── Chalkboard canvas (background) ──────────────────────── */
+#chalk-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+  /* canvas is normally non-interactive; drawing-mode changes this */
+  pointer-events: none;
+  touch-action: none;
+}
+
+/* Subtle board grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.04) 2px,
+      rgba(0,0,0,0.04) 4px
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Draw mode ───────────────────────────────────────────── */
+body.drawing-mode #chalk-canvas { pointer-events: all; cursor: crosshair; }
+body.drawing-mode .site-content { pointer-events: none; user-select: none; }
+body.drawing-mode-eraser #chalk-canvas { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="12" rx="2" fill="%23e8d8c0" stroke="%23888" stroke-width="1.5"/><rect x="2" y="8" width="8" height="12" rx="2" fill="%23c8a8a0"/></svg>') 12 16, cell; }
+
+/* ── Page wrapper ────────────────────────────────────────── */
+.site-content {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Navigation ──────────────────────────────────────────── */
+nav.chalkboard-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 2.5rem 1rem;
+  border-bottom: 2px solid var(--chalk-faint);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+nav.chalkboard-nav .site-title {
+  font-family: var(--hand);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--chalk-white);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 20px rgba(240,236,224,0.15);
+}
+
+nav.chalkboard-nav .nav-links {
+  display: flex;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+}
+
+nav.chalkboard-nav .nav-links a {
+  font-family: var(--hand);
+  font-size: 1.25rem;
+  color: var(--chalk-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+
+nav.chalkboard-nav .nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -3px;
+  width: 0; height: 1.5px;
+  background: var(--chalk-white);
+  transition: width 0.25s;
+}
+
+nav.chalkboard-nav .nav-links a:hover,
+nav.chalkboard-nav .nav-links a.active {
+  color: var(--chalk-white);
+}
+nav.chalkboard-nav .nav-links a:hover::after,
+nav.chalkboard-nav .nav-links a.active::after { width: 100%; }
+
+/* ── Main content area ───────────────────────────────────── */
+main {
+  flex: 1;
+  max-width: 780px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem 2rem 6rem;
+}
+
+/* ── Page title ──────────────────────────────────────────── */
+h1.page-title {
+  font-family: var(--hand);
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--chalk-white);
+  margin-bottom: 0.2rem;
+  line-height: 1.1;
+}
+
+.page-subtitle {
+  font-family: var(--hand);
+  font-size: 1.2rem;
+  color: var(--chalk-dim);
+  margin-bottom: 2.5rem;
+}
+
+h2 {
+  font-family: var(--hand);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--chalk-white);
+  margin: 2rem 0 0.8rem;
+}
+
+h3 {
+  font-family: var(--hand);
+  font-size: 1.5rem;
+  color: var(--chalk-cream);
+  margin: 1.5rem 0 0.5rem;
+}
+
+p { margin-bottom: 1.1rem; color: var(--chalk-cream); }
+a { color: var(--chalk-white); }
+
+/* ── Chalk divider ───────────────────────────────────────── */
+.chalk-rule {
+  border: none;
+  border-top: 1.5px solid var(--chalk-faint);
+  margin: 2rem 0;
+}
+
+/* ── Post / poem list ────────────────────────────────────── */
+.post-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.post-list li {
+  border-left: 2.5px solid var(--chalk-faint);
+  padding-left: 1.2rem;
+  transition: border-color 0.2s;
+}
+
+.post-list li:hover { border-color: var(--chalk-white); }
+
+.post-list .post-link {
+  font-family: var(--hand);
+  font-size: 1.45rem;
+  color: var(--chalk-white);
+  text-decoration: none;
+  display: block;
+  transition: letter-spacing 0.15s;
+}
+
+.post-list .post-link:hover { letter-spacing: 0.015em; }
+
+.post-list .post-meta {
+  font-size: 0.85rem;
+  color: var(--chalk-dim);
+  font-family: var(--hand);
+}
+
+/* ── Rendered markdown (post body) ──────────────────────── */
+.post-body {
+  margin-top: 2.5rem;
+}
+
+.post-body h1, .post-body h2, .post-body h3 {
+  font-family: var(--hand);
+  color: var(--chalk-white);
+}
+
+.post-body p { color: var(--chalk-cream); }
+
+.post-body blockquote {
+  border-left: 3px solid var(--chalk-faint);
+  padding-left: 1.2rem;
+  margin: 1.5rem 0;
+  color: var(--chalk-dim);
+  font-style: italic;
+}
+
+.post-body code {
+  font-size: 0.9em;
+  background: rgba(255,255,255,0.06);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+}
+
+.post-body pre {
+  background: rgba(0,0,0,0.25);
+  padding: 1.2rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.post-body pre code { background: none; }
+
+.post-body a { color: var(--accent-gold); }
+
+.post-body hr {
+  border: none;
+  border-top: 1px solid var(--chalk-faint);
+  margin: 2rem 0;
+}
+
+/* ── Poem body ───────────────────────────────────────────── */
+.poem-body {
+  margin-top: 2.5rem;
+  white-space: pre-wrap;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--chalk-cream);
+}
+
+.poem-body h1, .poem-body h2, .poem-body h3 {
+  font-family: var(--hand);
+  white-space: normal;
+}
+
+/* ── Back link ───────────────────────────────────────────── */
+.back-link {
+  font-family: var(--hand);
+  font-size: 1.1rem;
+  color: var(--chalk-dim);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 2rem;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--chalk-white); }
+
+/* ── Friends page ────────────────────────────────────────── */
+.friends-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.friend-card {
+  border: 1.5px solid var(--chalk-faint);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.4rem;
+  transition: border-color 0.2s, background 0.2s;
+  text-decoration: none;
+  display: block;
+}
+
+.friend-card:hover {
+  border-color: var(--chalk-dim);
+  background: rgba(255,255,255,0.03);
+}
+
+.friend-card .friend-name {
+  font-family: var(--hand);
+  font-size: 1.5rem;
+  color: var(--chalk-white);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.friend-card .friend-note {
+  font-size: 0.9rem;
+  color: var(--chalk-dim);
+  font-style: italic;
+}
+
+/* ── Projects page ───────────────────────────────────────── */
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.project-card {
+  border-bottom: 1px solid var(--chalk-faint);
+  padding-bottom: 2rem;
+}
+
+.project-card .project-title {
+  font-family: var(--hand);
+  font-size: 1.8rem;
+  color: var(--chalk-white);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.4rem;
+  transition: letter-spacing 0.15s;
+}
+
+.project-card .project-title:hover { letter-spacing: 0.015em; }
+
+.project-card .project-desc { color: var(--chalk-cream); margin-bottom: 0.6rem; }
+
+.project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.tag {
+  font-family: var(--hand);
+  font-size: 0.9rem;
+  padding: 0.1rem 0.6rem;
+  border: 1px solid var(--chalk-faint);
+  border-radius: 20px;
+  color: var(--chalk-dim);
+}
+
+/* ── Home / index ────────────────────────────────────────── */
+.home-hero {
+  padding: 5rem 2rem 3rem;
+  text-align: left;
+}
+
+.home-hero h1 {
+  font-family: var(--hand);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 700;
+  color: var(--chalk-white);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.home-hero .tagline {
+  font-family: var(--hand);
+  font-size: 1.4rem;
+  color: var(--chalk-dim);
+  max-width: 500px;
+}
+
+.home-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+  max-width: 780px;
+  margin: 3rem auto 0;
+  padding: 0 2rem;
+}
+
+.home-card {
+  display: block;
+  padding: 1.4rem 1.6rem;
+  border: 1.5px solid var(--chalk-faint);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.home-card:hover {
+  border-color: var(--chalk-dim);
+  background: rgba(255,255,255,0.03);
+}
+
+.home-card .card-label {
+  font-family: var(--hand);
+  font-size: 1.5rem;
+  color: var(--chalk-white);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.home-card .card-desc {
+  font-size: 0.9rem;
+  color: var(--chalk-dim);
+}
+
+/* ── Loading ─────────────────────────────────────────────── */
+.loading {
+  font-family: var(--hand);
+  font-size: 1.3rem;
+  color: var(--chalk-dim);
+  padding: 2rem 0;
+}
+
+.error-msg {
+  font-family: var(--hand);
+  font-size: 1.1rem;
+  color: var(--accent-red);
+  padding: 1rem 0;
+}
+
+/* ── Drawing toolbar ─────────────────────────────────────── */
+#draw-toolbar {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+}
+
+#draw-toggle-btn {
+  background: rgba(28, 58, 30, 0.92);
+  border: 2px solid var(--chalk-faint);
+  color: var(--chalk-white);
+  font-family: var(--hand);
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 24px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: border-color 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#draw-toggle-btn:hover,
+#draw-toggle-btn.active {
+  border-color: var(--chalk-white);
+  color: var(--chalk-white);
+}
+
+#draw-toggle-btn.active { background: rgba(44, 82, 46, 0.95); }
+
+#draw-panel {
+  background: rgba(22, 46, 24, 0.95);
+  border: 1.5px solid var(--chalk-faint);
+  border-radius: 12px;
+  padding: 1rem;
+  backdrop-filter: blur(8px);
+  display: none;
+  flex-direction: column;
+  gap: 0.8rem;
+  min-width: 190px;
+}
+
+#draw-panel.visible { display: flex; }
+
+.panel-label {
+  font-family: var(--hand);
+  font-size: 0.9rem;
+  color: var(--chalk-dim);
+  margin-bottom: 0.1rem;
+}
+
+.color-swatches {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.swatch:hover, .swatch.selected { border-color: #fff; transform: scale(1.15); }
+
+.brush-size-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+#brush-size {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--chalk-faint);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+#brush-size::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--chalk-white);
+  cursor: pointer;
+}
+
+#eraser-btn {
+  font-family: var(--hand);
+  font-size: 1rem;
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid var(--chalk-faint);
+  color: var(--chalk-cream);
+  padding: 0.35rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+#eraser-btn:hover, #eraser-btn.selected {
+  border-color: var(--chalk-white);
+  background: rgba(255,255,255,0.12);
+}
+
+#clear-btn {
+  font-family: var(--hand);
+  font-size: 0.9rem;
+  background: transparent;
+  border: 1px solid rgba(212, 96, 96, 0.4);
+  color: var(--accent-red);
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+#clear-btn:hover {
+  border-color: var(--accent-red);
+  background: rgba(212, 96, 96, 0.08);
+}
+
+/* ── Chalk dust particles ────────────────────────────────── */
+#dust-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  nav.chalkboard-nav { padding: 1rem 1.2rem; }
+  main { padding: 2rem 1.2rem 5rem; }
+  h1.page-title { font-size: 2.4rem; }
+  .home-hero h1 { font-size: 2.8rem; }
+  .home-hero, .home-sections { padding-left: 1.2rem; padding-right: 1.2rem; }
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poem — Spencer Hill</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"
+          integrity="sha512-rfX4p3RNnKQBMBXKNRex4jXMBGKsizBCMjAFjQr4RkuB1GU3IqS8pBb4bFLQFLi3iBfPU8Uyg9xXR9FtirgQ=="
+          crossorigin="anonymous"></script>
+  <script src="config.js"></script>
+  <script src="js/shell.js"></script>
+
+  <style>
+    /* Poem-specific: preserve line breaks in the rendered body */
+    .poem-body p { white-space: pre-wrap; margin-bottom: 1.5rem; }
+    .poem-body br { display: none; } /* marked.js adds <br> for soft breaks */
+  </style>
+</head>
+<body>
+
+<div class="site-content">
+  <!-- nav injected by shell.js -->
+  <main>
+    <a class="back-link" href="poetry.html">← poetry</a>
+    <h1 class="page-title" id="post-title"> </h1>
+    <p class="page-subtitle" id="post-meta"></p>
+    <hr class="chalk-rule">
+    <div id="post-body" class="poem-body">
+      <p class="loading">loading…</p>
+    </div>
+  </main>
+</div>
+
+<script src="js/posts.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Configure marked to keep line breaks for poetry
+  if (typeof marked !== "undefined") {
+    marked.setOptions({ breaks: true });
+  }
+  renderPost("poems", "poem-body");
+});
+</script>
+
+<script src="js/chalkboard.js"></script>
+<!--
+  Example of poem-specific chalk annotations.
+  Uncomment and edit to annotate individual poems.
+
+  <script>
+  window.drawInitialMarkings(function(ctx, canvas) {
+    const file = new URLSearchParams(window.location.search).get("file");
+    if (file === "my-annotated-poem.md") {
+      // Red circle around a word roughly at this position on screen
+      ctx.strokeStyle = "rgba(212,96,96,0.7)";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.ellipse(180, 340, 45, 14, -0.1, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Arrow pointing at a stanza
+      ctx.strokeStyle = "rgba(212,168,75,0.55)";
+      ctx.lineWidth = 2;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(340, 420);
+      ctx.lineTo(280, 440);
+      ctx.lineTo(290, 430);
+      ctx.stroke();
+    }
+  });
+  <\/script>
+-->
+</body>
+</html>
