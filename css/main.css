@@ -51,7 +51,7 @@ body {
 /* Subtle board grain overlay */
 body::before {
   content: '';
-  position: fixed;
+  position: absolute;
   inset: 0;
   background-image:
     repeating-linear-gradient(
@@ -68,11 +68,7 @@ body::before {
 /* ── Draw mode ───────────────────────────────────────────── */
 body.drawing-mode #chalk-canvas { pointer-events: all; cursor: crosshair; }
 body.drawing-mode .site-content { pointer-events: none; user-select: none; }
-body.drawing-mode-eraser #chalk-canvas {
-  pointer-events: all;
-  cursor: var(--eraser-cursor, cell);
-}
-body.drawing-mode-eraser .site-content { pointer-events: none; user-select: none; }
+
 
 /* ── Page wrapper ────────────────────────────────────────── */
 .site-content {
@@ -546,23 +542,7 @@ a { color: var(--chalk-white); }
   cursor: pointer;
 }
 
-#eraser-btn {
-  font-family: var(--hand);
-  font-size: 1rem;
-  background: rgba(255,255,255,0.07);
-  border: 1.5px solid var(--chalk-faint);
-  color: var(--chalk-cream);
-  padding: 0.35rem 0.8rem;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  transition: border-color 0.2s, background 0.2s;
-}
 
-#eraser-btn:hover, #eraser-btn.selected {
-  border-color: var(--chalk-white);
-  background: rgba(255,255,255,0.12);
-}
 
 #clear-btn {
   font-family: var(--hand);
@@ -601,14 +581,7 @@ a { color: var(--chalk-white); }
 }
 
 /* ── Chalk dust particles ────────────────────────────────── */
-#dust-canvas {
-  position: fixed; /* dust is a viewport visual effect, not page-anchored */
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
-  pointer-events: none;
-}
+
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 600px) {

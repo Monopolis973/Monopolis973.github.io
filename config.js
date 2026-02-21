@@ -23,8 +23,8 @@ const SITE_CONFIG = {
 
   // Friends list — add / remove entries freely
   friends: [
-    { name: "Friend One",  url: "https://example.com",  note: "brilliant mind, terrible puns" },
-    { name: "Friend Two",  url: "https://example.org",  note: "poet & philosopher" },
+    { name: "Lachlan",  url: "https://lachlanm.me/",  note: "a truly marvelous thinker" },
+    { name: "Agniv",  url: "https://agniv.me/",  note: "one of the do-iest people i know" },
   ],
 
   // Projects / Creations — add / remove freely

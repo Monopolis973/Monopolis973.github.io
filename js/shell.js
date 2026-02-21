@@ -52,7 +52,6 @@
         <span style="font-size:1.1rem;color:var(--chalk-dim)">●</span>
       </div>
     </div>
-    <button id="eraser-btn">🧹 eraser</button>
     <button id="clear-btn">clear my drawings</button>
     <button id="stop-draw-btn">✕ stop drawing</button>
   </div>
@@ -64,8 +63,7 @@
 
   // ── Canvases ─────────────────────────────────────────────
   const canvasHTML = `
-<canvas id="chalk-canvas"></canvas>
-<canvas id="dust-canvas"></canvas>`;
+<canvas id="chalk-canvas"></canvas>`;
 
   // ── Inject into document ─────────────────────────────────
   // We expect the page to have a <div class="site-content"> already
