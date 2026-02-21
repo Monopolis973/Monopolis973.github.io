@@ -117,14 +117,18 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ── Chalk dust particles ─────────────────────────────────
-  function spawnDust(x, y) {
-    const count = 28 + Math.floor(Math.random() * 18);
+  // x, y here are always VIEWPORT coords (not document coords),
+  // because dust is a purely visual effect that lives in the air —
+  // it doesn't need to be anchored to the page like chalk marks do.
+  // The dust canvas is position:fixed so viewport coords map directly.
+  function spawnDust(vx, vy, count) {
+    count = count || (28 + Math.floor(Math.random() * 18));
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
       const speed = 0.6 + Math.random() * 2.8;
       const grey  = Math.floor(190 + Math.random() * 60);
       dustParticles.push({
-        x, y,
+        x: vx, y: vy,
         vx:   Math.cos(angle) * speed,
         vy:   Math.sin(angle) * speed - 1.2,
         life: 1,
@@ -158,10 +162,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ── Pointer events ───────────────────────────────────────
+  // Document coords — used for chalk drawing (canvas is position:absolute)
   function getPos(e) {
-    // The canvas is position:absolute (document-relative), so we must add
-    // scroll offsets to convert viewport-relative mouse coords into
-    // document-relative coords that stay anchored to the page content.
     const sx = window.scrollX;
     const sy = window.scrollY;
     if (e.touches) {
@@ -173,14 +175,24 @@ document.addEventListener("DOMContentLoaded", function () {
     return { x: e.clientX + sx, y: e.clientY + sy };
   }
 
+  // Viewport coords — used for dust (dust canvas is position:fixed)
+  function getViewportPos(e) {
+    if (e.touches) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    return { x: e.clientX, y: e.clientY };
+  }
+
   canvas.addEventListener("pointerdown", (e) => {
     if (!drawingMode) return;
-    const {x, y} = getPos(e);
+    const {x, y}    = getPos(e);
+    const {x: vx, y: vy} = getViewportPos(e);
     lastX = x; lastY = y;
 
+    // Collapse the options panel while drawing so it's out of the way
+    panel.classList.add("minimized");
+
     if (tool === "eraser") {
-      // Single click = chalk dust; hold = erase
-      spawnDust(x, y);
+      // Initial click = big dust burst; hold = erase + trickle dust
+      spawnDust(vx, vy);  // full burst (default count ~30–45)
       holdTimer = setTimeout(() => {
         isHolding = true;
         erase(x, y);
@@ -197,10 +209,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   canvas.addEventListener("pointermove", (e) => {
     if (!drawingMode) return;
-    const {x, y} = getPos(e);
+    const {x, y}         = getPos(e);
+    const {x: vx, y: vy} = getViewportPos(e);
 
     if (tool === "eraser" && isHolding) {
       erase(x, y);
+      // Trickle a small amount of dust as the eraser moves — about 1/8 of the burst
+      if (Math.random() < 0.6) spawnDust(vx, vy, 3 + Math.floor(Math.random() * 4));
       saveCanvas();
     } else if (tool === "chalk" && isDrawing) {
       drawChalkSegment(x, y, lastX, lastY);
@@ -214,12 +229,15 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isHolding) { saveCanvas(); }
     isDrawing = false;
     isHolding = false;
+    // Restore the panel once the stroke is done
+    panel.classList.remove("minimized");
   });
 
   canvas.addEventListener("pointercancel", () => {
     if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
     isDrawing = false;
     isHolding = false;
+    panel.classList.remove("minimized");
   });
 
   // ── LocalStorage persistence ─────────────────────────────

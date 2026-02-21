@@ -491,6 +491,19 @@ a { color: var(--chalk-white); }
 
 #draw-panel.visible { display: flex; }
 
+/* Minimizes to just a thin strip while the user is actively drawing */
+#draw-panel.minimized {
+  opacity: 0;
+  transform: translateY(6px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+#draw-panel.visible:not(.minimized) {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
 .panel-label {
   font-family: var(--hand);
   font-size: 0.9rem;
@@ -577,9 +590,10 @@ a { color: var(--chalk-white); }
 
 /* ── Chalk dust particles ────────────────────────────────── */
 #dust-canvas {
-  position: absolute; /* scrolls with page */
-  top: 0;
-  left: 0;
+  position: fixed; /* dust is a viewport visual effect, not page-anchored */
+  inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 5;
   pointer-events: none;
 }
