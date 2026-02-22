@@ -45,12 +45,12 @@ window.drawInitialMarkings(function(ctx, canvas) {
   ctx.lineCap = "round";
 
   // Wavy underline below title area
-  ctx.beginPath();
-  ctx.moveTo(42, 195);
-  for (let x = 42; x < 320; x += 10) {
-    ctx.lineTo(x, 195 + Math.sin((x - 42) * 0.15) * 3);
-  }
-  ctx.stroke();
+  // ctx.beginPath();
+  // ctx.moveTo(42, 195);
+  // for (let x = 42; x < 320; x += 10) {
+  //   ctx.lineTo(x, 195 + Math.sin((x - 42) * 0.15) * 3);
+  // }
+  // ctx.stroke();
 
   ctx.restore();
 });
