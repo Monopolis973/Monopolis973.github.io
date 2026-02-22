@@ -209,7 +209,7 @@ a { color: var(--chalk-white); }
   transition: letter-spacing 0.15s;
 }
 
-.post-list .post-link:hover { letter-spacing: 0.015em; }
+/* .post-list .post-link:hover { } */
 
 .post-list .post-meta {
   font-size: 0.85rem;
