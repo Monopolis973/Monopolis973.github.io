@@ -7,9 +7,10 @@
   <link rel="stylesheet" href="css/main.css">
   <script src="config.js"></script>
   <script src="js/shell.js"></script>
-  <!-- opentype.js: parses font files so we can get per-glyph stroke paths -->
+  <!-- opentype.js: parses font files so we can get per-glyph stroke paths.
+       No integrity attribute — SRI hashes on cdnjs are known to be unreliable
+       and a mismatch silently blocks the entire script. -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"
-          integrity="sha512-VFpGpKuECxKHQnVCy5ZMHD/SdFWmjqp9jJxgbQ0PdTaMKRHkYnSvpKQibQeNEVU3B/ZXDKU36g2sH/z0KMXA=="
           crossorigin="anonymous"></script>
   <script src="js/proof-writer.js"></script>
 </head>
@@ -59,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="js/chalkboard.js"></script>
 <script>
 // ── Proof fetching ─────────────────────────────────────────────────────────
-// Mirrors the pattern in posts.js: GitHub API → random file → raw content.
 
 function parseFrontMatter(raw) {
   let title = "", body = raw.trim();
@@ -96,49 +96,67 @@ async function fetchRandomProof() {
   }
 }
 
-// ── Hook into drawInitialMarkings ──────────────────────────────────────────
-window.drawInitialMarkings(async function (ctx, canvas) {
+// ── IMPORTANT: wrap in DOMContentLoaded so window.drawInitialMarkings
+// is guaranteed to exist before we call it. chalkboard.js defines it
+// inside its own DOMContentLoaded listener, so calling it from a bare
+// <script> tag (which runs during parsing, before DOMContentLoaded fires)
+// means it's undefined at call time.
+document.addEventListener("DOMContentLoaded", () => {
 
-  // 1. Decorative asterism (original home page marking)
-  ctx.save();
-  ctx.strokeStyle = "rgba(240,236,224,0.18)";
-  ctx.lineWidth   = 1.5;
-  ctx.lineCap     = "round";
-  const stars = [
-    [canvas.width - 120, 80], [canvas.width - 90, 60], [canvas.width - 60, 85],
-    [canvas.width - 100, 110], [canvas.width - 75, 95],
-  ];
-  for (const [x, y] of stars) {
-    for (let a = 0; a < Math.PI * 2; a += Math.PI / 3) {
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(x + Math.cos(a) * 8, y + Math.sin(a) * 8);
-      ctx.stroke();
+  window.drawInitialMarkings(async function (ctx, canvas) {
+
+    // 1. Decorative asterism (original home page marking)
+    ctx.save();
+    ctx.strokeStyle = "rgba(240,236,224,0.18)";
+    ctx.lineWidth   = 1.5;
+    ctx.lineCap     = "round";
+    const stars = [
+      [canvas.width - 120, 80], [canvas.width - 90, 60], [canvas.width - 60, 85],
+      [canvas.width - 100, 110], [canvas.width - 75, 95],
+    ];
+    for (const [x, y] of stars) {
+      for (let a = 0; a < Math.PI * 2; a += Math.PI / 3) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + Math.cos(a) * 8, y + Math.sin(a) * 8);
+        ctx.stroke();
+      }
     }
-  }
-  ctx.restore();
+    ctx.restore();
 
-  // 2. Load the Caveat font binary (needed by opentype.js to get stroke paths)
-  let fontBuffer;
-  try {
-    const res = await fetch("fonts/Caveat-Regular.ttf");
-    if (!res.ok) throw new Error("font file not found");
-    fontBuffer = await res.arrayBuffer();
-  } catch (e) {
-    console.warn("ProofWriter: could not load font —", e.message,
-                 "\nMake sure fonts/Caveat-Regular.ttf exists in your repo.");
-    return;
-  }
+    // 2. Check opentype loaded — if the CDN script failed for any reason,
+    //    bail out gracefully instead of throwing.
+    if (typeof opentype === "undefined") {
+      console.warn("ProofWriter: opentype.js did not load — skipping proof animation.");
+      return;
+    }
 
-  // 3. Fetch a random proof and animate it
-  const proof = await fetchRandomProof();
-  if (!proof) return;
+    // 3. Load the Caveat font binary
+    let fontBuffer;
+    try {
+      const res = await fetch("fonts/Caveat-Regular.ttf");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      fontBuffer = await res.arrayBuffer();
+    } catch (e) {
+      console.warn("ProofWriter: could not load fonts/Caveat-Regular.ttf —", e.message,
+                   "\nDownload it from fonts.google.com/specimen/Caveat and commit to your repo.");
+      return;
+    }
 
-  await ProofWriter.animate(ctx, canvas, proof, fontBuffer);
+    // 4. Fetch a random proof and animate it
+    const proof = await fetchRandomProof();
+    if (!proof) {
+      console.warn("ProofWriter: no proofs found in the proofs/ folder.");
+      return;
+    }
 
-  // 4. Save to localStorage so the animation doesn't replay on the next visit
-  window._saveCanvas && window._saveCanvas();
-});
+    await ProofWriter.animate(ctx, canvas, proof, fontBuffer);
+
+    // 5. Save so the animation doesn't replay on the next visit
+    window._saveCanvas && window._saveCanvas();
+  });
+
+}); // end DOMContentLoaded
 </script>
 </body>
 </html>

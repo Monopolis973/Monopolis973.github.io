@@ -2,6 +2,13 @@
    chalkboard.js  —  canvas drawing engine
    ============================================================ */
 
+// Define drawInitialMarkings IMMEDIATELY (before DOMContentLoaded) so that
+// inline <script> tags calling it during HTML parsing don't get a TypeError.
+// If called early, we buffer the function and run it once the canvas is ready.
+window.drawInitialMarkings = function (drawFn) {
+  window._pendingInitialMarkings = drawFn;
+};
+
 document.addEventListener("DOMContentLoaded", function () {
 (function () {
   "use strict";
@@ -22,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let drawingMode = false;
 
   // ── Resize ──────────────────────────────────────────────
-  // Canvas covers the full document so marks stay anchored to content.
   function docSize() {
     return {
       w: Math.max(document.body.scrollWidth, document.documentElement.scrollWidth, window.innerWidth),
@@ -43,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", resize);
   resize();
 
-  // Grow canvas if dynamic content (posts, poems) makes the page taller
   const _ro = new ResizeObserver(() => {
     const { w, h } = docSize();
     if (w !== canvas.width || h !== canvas.height) resize();
@@ -97,7 +102,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ── Position helpers ─────────────────────────────────────
-  // Canvas is position:absolute — add scroll offsets to get document coords.
   function getDocPos(e) {
     const sx = window.scrollX, sy = window.scrollY;
     if (e.touches) return { x: e.touches[0].clientX + sx, y: e.touches[0].clientY + sy };
@@ -109,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!drawingMode) return;
     const {x, y} = getDocPos(e);
     lastX = x; lastY = y;
-    // Close the options panel as soon as drawing starts
     panel.classList.remove("visible");
     if (tool === "eraser") {
       holdTimer = setTimeout(() => {
@@ -169,11 +172,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  window.drawInitialMarkings = function(drawFn) {
+  // ── drawInitialMarkings ───────────────────────────────────
+  // Now that the canvas is ready, redefine the real version and run any
+  // buffered call that arrived before DOMContentLoaded.
+  window.drawInitialMarkings = function (drawFn) {
     window._initialMarkingsFn = drawFn;
     const saved = localStorage.getItem(STORAGE_KEY);
     if (!saved) setTimeout(() => drawFn(ctx, canvas), 120);
   };
+
+  // Run whatever was registered before DOMContentLoaded (e.g. from a bare
+  // <script> tag at the bottom of the page).
+  if (window._pendingInitialMarkings) {
+    window.drawInitialMarkings(window._pendingInitialMarkings);
+    window._pendingInitialMarkings = null;
+  }
 
   // ── Toolbar ───────────────────────────────────────────────
   const toggleBtn   = document.getElementById("draw-toggle-btn");
@@ -189,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateToggleBtn() {
     if (!drawingMode) {
       toggleIcon.textContent  = "✏️";
-      toggleLabel.textContent = "draw!";
+      toggleLabel.textContent = "draw! ";
       return;
     }
     if (tool === "eraser") {
@@ -274,12 +287,12 @@ document.addEventListener("DOMContentLoaded", function () {
     color = swatches[0].dataset.color;
   }
 
-  window.addEventListener("load", () => setTimeout(loadCanvas, 80));
-  window.addEventListener("beforeunload", () => { if (ctx) saveCanvas(); });
-
+  window._saveCanvas  = saveCanvas;
   window._chalkCtx    = ctx;
   window._chalkCanvas = canvas;
-  window._saveCanvas  = saveCanvas;
+
+  window.addEventListener("load", () => setTimeout(loadCanvas, 80));
+  window.addEventListener("beforeunload", () => { if (ctx) saveCanvas(); });
 
 })();
 }); // end DOMContentLoaded
