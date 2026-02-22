@@ -2,11 +2,15 @@
    chalkboard.js  —  canvas drawing engine
    ============================================================ */
 
-// Define drawInitialMarkings IMMEDIATELY (before DOMContentLoaded) so that
-// inline <script> tags calling it during HTML parsing don't get a TypeError.
-// If called early, we buffer the function and run it once the canvas is ready.
+// Define drawInitialMarkings and drawOnLoad IMMEDIATELY (synchronously,
+// before DOMContentLoaded) so inline <script> tags that call them during
+// HTML parsing don't get a TypeError. Calls are buffered and replayed
+// once the canvas is ready inside DOMContentLoaded.
 window.drawInitialMarkings = function (drawFn) {
   window._pendingInitialMarkings = drawFn;
+};
+window.drawOnLoad = function (drawFn) {
+  window._pendingDrawOnLoad = drawFn;
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -17,18 +21,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const canvas = document.getElementById("chalk-canvas");
   const ctx    = canvas.getContext("2d");
 
-  // ── State ───────────────────────────────────────────────
-  let tool        = "chalk";   // "chalk" | "eraser"
+  // ── State ────────────────────────────────────────────────
+  let tool        = "chalk";
   let color       = "#f0ece0";
   let brushSize   = 3;
   let isDrawing   = false;
-  let isHolding   = false;     // eraser: mouse held past threshold
+  let isHolding   = false;
   let holdTimer   = null;
   let lastX       = 0;
   let lastY       = 0;
   let drawingMode = false;
 
-  // ── Resize ──────────────────────────────────────────────
+  // ── Resize ───────────────────────────────────────────────
   function docSize() {
     return {
       w: Math.max(document.body.scrollWidth, document.documentElement.scrollWidth, window.innerWidth),
@@ -55,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   _ro.observe(document.body);
 
-  // ── Chalk drawing ────────────────────────────────────────
+  // ── Chalk drawing ─────────────────────────────────────────
   function hexToRgb(hex) {
     return {
       r: parseInt(hex.slice(1,3), 16),
@@ -89,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // ── Eraser ───────────────────────────────────────────────
+  // ── Eraser ────────────────────────────────────────────────
   function erase(x, y) {
     const r = (brushSize + 6) * 2.5;
     ctx.save();
@@ -101,24 +105,21 @@ document.addEventListener("DOMContentLoaded", function () {
     ctx.restore();
   }
 
-  // ── Position helpers ─────────────────────────────────────
+  // ── Position helpers ──────────────────────────────────────
   function getDocPos(e) {
     const sx = window.scrollX, sy = window.scrollY;
     if (e.touches) return { x: e.touches[0].clientX + sx, y: e.touches[0].clientY + sy };
     return { x: e.clientX + sx, y: e.clientY + sy };
   }
 
-  // ── Pointer events ───────────────────────────────────────
+  // ── Pointer events ────────────────────────────────────────
   canvas.addEventListener("pointerdown", (e) => {
     if (!drawingMode) return;
     const {x, y} = getDocPos(e);
     lastX = x; lastY = y;
     panel.classList.remove("visible");
     if (tool === "eraser") {
-      holdTimer = setTimeout(() => {
-        isHolding = true;
-        erase(x, y);
-      }, 160);
+      holdTimer = setTimeout(() => { isHolding = true; erase(x, y); }, 160);
     } else {
       isDrawing = true;
       drawChalkSegment(x, y, x, y);
@@ -131,12 +132,8 @@ document.addEventListener("DOMContentLoaded", function () {
   canvas.addEventListener("pointermove", (e) => {
     if (!drawingMode) return;
     const {x, y} = getDocPos(e);
-    if (tool === "eraser" && isHolding) {
-      erase(x, y);
-      saveCanvas();
-    } else if (tool === "chalk" && isDrawing) {
-      drawChalkSegment(x, y, lastX, lastY);
-    }
+    if (tool === "eraser" && isHolding) { erase(x, y); saveCanvas(); }
+    else if (tool === "chalk" && isDrawing) { drawChalkSegment(x, y, lastX, lastY); }
     lastX = x; lastY = y;
     e.preventDefault();
   });
@@ -145,47 +142,59 @@ document.addEventListener("DOMContentLoaded", function () {
     if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
     if (isHolding) saveCanvas();
     if (isDrawing) saveCanvas();
-    isDrawing = false;
-    isHolding = false;
+    isDrawing = false; isHolding = false;
   });
 
   canvas.addEventListener("pointercancel", () => {
     if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
-    isDrawing = false;
-    isHolding = false;
+    isDrawing = false; isHolding = false;
   });
 
-  // ── LocalStorage ─────────────────────────────────────────
+  // ── LocalStorage ──────────────────────────────────────────
   const STORAGE_KEY = "chalkCanvas_" + window.location.pathname;
 
   function saveCanvas() {
     try { localStorage.setItem(STORAGE_KEY, canvas.toDataURL()); }
-    catch(e) { /* quota exceeded */ }
+    catch(e) { /* quota */ }
   }
 
-  function loadCanvas() {
+  // Loads saved canvas, then calls cb() when the image is painted (or immediately
+  // if there's nothing saved). This lets callers safely inspect pixel data after.
+  function loadCanvas(cb) {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const img = new Image();
-      img.onload = () => ctx.drawImage(img, 0, 0);
+      img.onload = () => { ctx.drawImage(img, 0, 0); cb && cb(); };
+      img.onerror = () => cb && cb();
       img.src = saved;
+    } else {
+      cb && cb();
     }
   }
 
-  // ── drawInitialMarkings ───────────────────────────────────
-  // Now that the canvas is ready, redefine the real version and run any
-  // buffered call that arrived before DOMContentLoaded.
+  // ── drawInitialMarkings (first visit only) ────────────────
+  // Redefine the real version now that canvas exists.
   window.drawInitialMarkings = function (drawFn) {
     window._initialMarkingsFn = drawFn;
     const saved = localStorage.getItem(STORAGE_KEY);
     if (!saved) setTimeout(() => drawFn(ctx, canvas), 120);
   };
 
-  // Run whatever was registered before DOMContentLoaded (e.g. from a bare
-  // <script> tag at the bottom of the page).
+  // ── drawOnLoad (every visit, after canvas is restored) ────
+  // Redefine the real version now that canvas exists.
+  window.drawOnLoad = function (drawFn) {
+    window._drawOnLoadFn = drawFn;
+    // Will be called from the load handler below once the saved image is painted.
+  };
+
+  // Replay any calls that arrived before DOMContentLoaded.
   if (window._pendingInitialMarkings) {
     window.drawInitialMarkings(window._pendingInitialMarkings);
     window._pendingInitialMarkings = null;
+  }
+  if (window._pendingDrawOnLoad) {
+    window.drawOnLoad(window._pendingDrawOnLoad);
+    window._pendingDrawOnLoad = null;
   }
 
   // ── Toolbar ───────────────────────────────────────────────
@@ -224,9 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function stopDrawing() {
-    drawingMode = false;
-    isDrawing   = false;
-    isHolding   = false;
+    drawingMode = false; isDrawing = false; isHolding = false;
     if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
     panel.classList.remove("visible");
     toggleBtn.classList.remove("active");
@@ -235,11 +242,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   toggleBtn.addEventListener("click", () => {
-    if (!drawingMode) {
-      startDrawing();
-    } else {
-      panel.classList.toggle("visible");
-    }
+    if (!drawingMode) startDrawing();
+    else panel.classList.toggle("visible");
   });
 
   stopBtn.addEventListener("click", stopDrawing);
@@ -255,8 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   swatches.forEach(sw => {
     sw.addEventListener("click", () => {
-      color = sw.dataset.color;
-      tool  = "chalk";
+      color = sw.dataset.color; tool = "chalk";
       sw.classList.add("selected");
       swatches.forEach(s => { if (s !== sw) s.classList.remove("selected"); });
       eraserBtn.classList.remove("selected");
@@ -291,7 +294,14 @@ document.addEventListener("DOMContentLoaded", function () {
   window._chalkCtx    = ctx;
   window._chalkCanvas = canvas;
 
-  window.addEventListener("load", () => setTimeout(loadCanvas, 80));
+  // Load saved canvas, then fire drawOnLoad so the callback can safely
+  // inspect pixel data (it needs the existing marks to be painted first).
+  window.addEventListener("load", () => {
+    loadCanvas(() => {
+      if (window._drawOnLoadFn) window._drawOnLoadFn(ctx, canvas);
+    });
+  });
+
   window.addEventListener("beforeunload", () => { if (ctx) saveCanvas(); });
 
 })();
