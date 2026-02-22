@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateToggleBtn() {
     if (!drawingMode) {
       toggleIcon.textContent  = "✏️";
-      toggleLabel.textContent = "draw!";
+      toggleLabel.textContent = "draw! ";
       return;
     }
     if (tool === "eraser") {
