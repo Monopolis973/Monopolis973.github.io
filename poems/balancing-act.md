@@ -24,7 +24,7 @@ they listen and nod and say oh that’s nice, why don’t you join us for lunch.
 so you do, you poor little fool, swayed
 by their breath, Her breath, humming through the silicon hill,
 now telling you whom you have squished
-by falling haphazaradly into your ranks,
+by falling haphazardly into your ranks,
 and your only defense is a memory and a trinket.
 
 the slides on the playground only go up

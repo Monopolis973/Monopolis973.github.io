@@ -58,7 +58,7 @@
   </div>
   <button id="draw-toggle-btn">
     <span id="draw-toggle-icon">✏️</span>
-    <span class="toggle-label">draw/span>
+    <span class="toggle-label">draw!</span>
   </button>
 </div>`;
 

@@ -170,6 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   window.drawInitialMarkings = function(drawFn) {
+    window._initialMarkingsFn = drawFn;
     const saved = localStorage.getItem(STORAGE_KEY);
     if (!saved) setTimeout(() => drawFn(ctx, canvas), 120);
   };
@@ -188,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateToggleBtn() {
     if (!drawingMode) {
       toggleIcon.textContent  = "✏️";
-      toggleLabel.textContent = "draw! ";
+      toggleLabel.textContent = "draw!";
       return;
     }
     if (tool === "eraser") {

@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="css/main.css">
   <script src="config.js"></script>
   <script src="js/shell.js"></script>
+  <!-- opentype.js: parses font files so we can get per-glyph stroke paths -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"
+          integrity="sha512-VFpGpKuECxKHQnVCy5ZMHD/SdFWmjqp9jJxgbQ0PdTaMKRHkYnSvpKQibQeNEVU3B/ZXDKU36g2sH/z0KMXA=="
+          crossorigin="anonymous"></script>
+  <script src="js/proof-writer.js"></script>
 </head>
 <body>
 
@@ -53,27 +58,86 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <script src="js/chalkboard.js"></script>
 <script>
-// ── Custom initial markings for the home page ────────────
-window.drawInitialMarkings(function(ctx, canvas) {
-  // A few decorative chalk marks on the home page
-  ctx.save();
+// ── Proof fetching ─────────────────────────────────────────────────────────
+// Mirrors the pattern in posts.js: GitHub API → random file → raw content.
 
-  // Faint asterism in the top-right corner
+function parseFrontMatter(raw) {
+  let title = "", body = raw.trim();
+  if (raw.startsWith("---")) {
+    const end = raw.indexOf("---", 3);
+    if (end !== -1) {
+      const block = raw.slice(3, end).trim();
+      body = raw.slice(end + 3).trim();
+      for (const line of block.split("\n")) {
+        const colon = line.indexOf(":");
+        if (colon === -1) continue;
+        const key = line.slice(0, colon).trim();
+        const val = line.slice(colon + 1).trim().replace(/^["']|["']$/g, "");
+        if (key === "title") title = val;
+      }
+    }
+  }
+  return { title, body };
+}
+
+async function fetchRandomProof() {
+  const { github_username, github_repo } = SITE_CONFIG;
+  try {
+    const res   = await fetch(`https://api.github.com/repos/${github_username}/${github_repo}/contents/proofs`);
+    if (!res.ok) return null;
+    const all   = await res.json();
+    const files = all.filter(f => f.name.endsWith(".md") && f.type === "file");
+    if (!files.length) return null;
+    const chosen = files[Math.floor(Math.random() * files.length)];
+    const raw    = await fetch(chosen.download_url).then(r => r.text());
+    return parseFrontMatter(raw);
+  } catch {
+    return null;
+  }
+}
+
+// ── Hook into drawInitialMarkings ──────────────────────────────────────────
+window.drawInitialMarkings(async function (ctx, canvas) {
+
+  // 1. Decorative asterism (original home page marking)
+  ctx.save();
   ctx.strokeStyle = "rgba(240,236,224,0.18)";
-  ctx.lineWidth = 1.5;
-  ctx.lineCap = "round";
-  const stars = [[canvas.width-120, 80],[canvas.width-90, 60],[canvas.width-60, 85],
-                 [canvas.width-100, 110],[canvas.width-75, 95]];
-  for (const [x,y] of stars) {
-    for (let a = 0; a < Math.PI*2; a += Math.PI/3) {
+  ctx.lineWidth   = 1.5;
+  ctx.lineCap     = "round";
+  const stars = [
+    [canvas.width - 120, 80], [canvas.width - 90, 60], [canvas.width - 60, 85],
+    [canvas.width - 100, 110], [canvas.width - 75, 95],
+  ];
+  for (const [x, y] of stars) {
+    for (let a = 0; a < Math.PI * 2; a += Math.PI / 3) {
       ctx.beginPath();
       ctx.moveTo(x, y);
-      ctx.lineTo(x + Math.cos(a)*8, y + Math.sin(a)*8);
+      ctx.lineTo(x + Math.cos(a) * 8, y + Math.sin(a) * 8);
       ctx.stroke();
     }
   }
-
   ctx.restore();
+
+  // 2. Load the Caveat font binary (needed by opentype.js to get stroke paths)
+  let fontBuffer;
+  try {
+    const res = await fetch("fonts/Caveat-Regular.ttf");
+    if (!res.ok) throw new Error("font file not found");
+    fontBuffer = await res.arrayBuffer();
+  } catch (e) {
+    console.warn("ProofWriter: could not load font —", e.message,
+                 "\nMake sure fonts/Caveat-Regular.ttf exists in your repo.");
+    return;
+  }
+
+  // 3. Fetch a random proof and animate it
+  const proof = await fetchRandomProof();
+  if (!proof) return;
+
+  await ProofWriter.animate(ctx, canvas, proof, fontBuffer);
+
+  // 4. Save to localStorage so the animation doesn't replay on the next visit
+  window._saveCanvas && window._saveCanvas();
 });
 </script>
 </body>
