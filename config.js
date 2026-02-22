@@ -16,30 +16,30 @@ const SITE_CONFIG = {
     { label: "home",     href: "index.html" },
     { label: "writings", href: "writings.html" },
     { label: "poetry",   href: "poetry.html" },
-    { label: "projects", href: "projects.html" },
+    // { label: "projects", href: "projects.html" },
     { label: "friends",  href: "friends.html" },
     { label: "about",    href: "about.html" },
   ],
 
   // Friends list — add / remove entries freely
   friends: [
-    { name: "Lachlan",  url: "https://lachlanm.me/",  note: "a truly marvelous thinker" },
-    { name: "Agniv",  url: "https://agniv.me/",  note: "one of the do-iest people i know" },
+    { name: "Lachlan",  url: "https://lachlanm.me/",  note: "a marvelous thinker and connector" },
+    { name: "Agniv",  url: "https://agniv.me/",  note: "they know many gods" },
   ],
 
   // Projects / Creations — add / remove freely
   projects: [
-    {
-      title: "Project Alpha",
-      url:   "https://github.com/spencerhill/project-alpha",
-      desc:  "A short description of this project.",
-      tags:  ["research", "code"],
-    },
-    {
-      title: "Project Beta",
-      url:   "https://github.com/spencerhill/project-beta",
-      desc:  "Another project I'm proud of.",
-      tags:  ["writing", "music"],
-    },
+    // {
+    //   title: "Project Alpha",
+    //   url:   "https://github.com/spencerhill/project-alpha",
+    //   desc:  "A short description of this project.",
+    //   tags:  ["research", "code"],
+    // },
+    // {
+    //   title: "Project Beta",
+    //   url:   "https://github.com/spencerhill/project-beta",
+    //   desc:  "Another project I'm proud of.",
+    //   tags:  ["writing", "music"],
+    // },
   ],
 };

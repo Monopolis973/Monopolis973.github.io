@@ -188,11 +188,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateToggleBtn() {
     if (!drawingMode) {
       toggleIcon.textContent  = "✏️";
-      toggleLabel.textContent = "draw on board";
+      toggleLabel.textContent = "draw!";
       return;
     }
     if (tool === "eraser") {
-      toggleIcon.textContent  = "🧹";
+      toggleIcon.textContent  = "🧼";
       toggleLabel.textContent = ` eraser · ${brushSize}`;
     } else {
       toggleIcon.innerHTML    = `<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:${color};border:1.5px solid rgba(255,255,255,0.35);vertical-align:middle;margin-bottom:1px"></span>`;
