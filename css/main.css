@@ -205,9 +205,11 @@ a { color: var(--chalk-white); }
   font-size: 1.45rem;
   color: var(--chalk-white);
   text-decoration: none;
-  display: block;
-  transition: letter-spacing 0.15s;
+  display: inline-block;
+  transition: color 0.2s, transform 0.15s;
 }
+
+.post-list .post-link:hover { transform: scaleX(1.015); }
 
 /* .post-list .post-link:hover { } */
 
