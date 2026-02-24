@@ -2,6 +2,13 @@
    chalkboard.js  —  canvas drawing engine
    ============================================================ */
 
+// Stub defined immediately so inline <script> blocks in HTML can call
+// window.drawInitialMarkings(...) before DOMContentLoaded fires.
+// The real implementation below will pick up and run the queued function.
+window.drawInitialMarkings = function(fn) {
+  window._initialMarkingsFn = fn;
+};
+
 document.addEventListener("DOMContentLoaded", function () {
 (function () {
   "use strict";
@@ -169,11 +176,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Override the stub with the real implementation now that canvas is ready.
+  // Also run any callback that was already queued by the stub.
   window.drawInitialMarkings = function(drawFn) {
     window._initialMarkingsFn = drawFn;
     const saved = localStorage.getItem(STORAGE_KEY);
     if (!saved) setTimeout(() => drawFn(ctx, canvas), 120);
   };
+
+  // If a page's inline <script> already called the stub and stored a fn, run it now.
+  if (window._initialMarkingsFn) {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) setTimeout(() => window._initialMarkingsFn(ctx, canvas), 120);
+  }
 
   // ── Toolbar ───────────────────────────────────────────────
   const toggleBtn   = document.getElementById("draw-toggle-btn");
